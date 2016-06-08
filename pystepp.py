@@ -24,7 +24,7 @@ import time
 #Step 2: Read arguements https://www.youtube.com/watch?v=kQFKtI6gn9Y
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
-#read the direction and number of steps; if steps are 0 exit 
+#read the direction and number of steps; if steps are 0 exit ddd
 try: 
     direction = sys.argv[1]
     steps = int(float(sys.argv[2]))
