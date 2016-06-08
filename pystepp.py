@@ -6,12 +6,13 @@ import time
 try: 
     direction = sys.argv[1]
     steps = int(float(sys.argv[2]))
+	speed = sys.argv[3]
 except:
     steps = 0
 print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed")
 
 #Kontrollausgabe der Eingegebenen Perimeter
-print("Bewege den Motor %s Schritte nach %s.") % (steps, direction)
+print("Bewege den Motor %s Schritte nach %s. Speed= %s") % (steps, direction, speed)
 
 #GPIO Vorbereitung
 gpio.setmode(gpio.BCM)
@@ -30,8 +31,8 @@ elif direction == 'right':
 StepCounter = 0
 
 #Geschwindigkeit wird durch eine Wartezeit zwischen den Schritten realisiert
-WaitTime = 0.001
-
+#WaitTime = 0.001
+WaitTime = speed
 
 #main
 while StepCounter < steps:
