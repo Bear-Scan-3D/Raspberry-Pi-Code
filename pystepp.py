@@ -6,7 +6,7 @@ import time
 try: 
     direction = sys.argv[1]
     steps = int(float(sys.argv[2]))
-    speed = int(sys.argv[3])
+    speed = int(float(sys.argv[3]))
 except:
     steps = 0
 print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
@@ -34,7 +34,7 @@ StepCounter = 0
 #WaitTime = 0.001
 #Speed 0.001 = 100%
 
-WaitTime = speed/100000
+WaitTime = (speed/100000)
 
 #main
 while StepCounter < steps:
