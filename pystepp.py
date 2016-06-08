@@ -2,7 +2,7 @@ import sys
 import RPi.GPIO as gpio #https://pypi.python.org/pypi/RPi.GPIO
 import time
 
-#Variablen ins Programm übergeben
+#Variablen ins Programm uebergeben
 try: 
     direction = sys.argv[1]
     steps = int(float(sys.argv[2]))
@@ -26,7 +26,7 @@ if direction == 'left':
 elif direction == 'right':
     gpio.output(23, False)
 	
-#Schrittzähler initialisieren
+#Schrittzaehler initialisieren
 StepCounter = 0
 
 #Geschwindigkeit wird durch eine Wartezeit zwischen den Schritten realisiert
@@ -44,7 +44,7 @@ while StepCounter < steps:
     #wartezeit
     time.sleep(WaitTime)
 
-#GPIO freigeben, damit andere Programme damit arbeiten können
+#GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 
 print ("Bewegung beendet.")
