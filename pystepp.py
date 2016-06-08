@@ -33,7 +33,7 @@ StepCounter = 0
 #Berechnung der Schritte aus Winkel
 #Steppermotor hat 1.8 Degree per Step
 #Microstepping 1/8 Schritte an 
-#Also 200 volle Steps für 360 Grad und 1600 Microsteps 
+#Also 200 volle Steps fuer 360 Grad und 1600 Microsteps 
 #Beispiel: 18 Grad -> 18/1.8 =10 -> 10*8 = 80
 #WinkelSteps = int((grad/1.8)*8)
 
