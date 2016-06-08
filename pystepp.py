@@ -9,7 +9,7 @@ try:
     speed = int(float(sys.argv[3]))
 except:
     steps = 0
-print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
+    print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
 
 #Kontrollausgabe der Eingegebenen Perimeter
 print("Bewege den Motor %s Schritte nach %s. Speed= %s") % (steps, direction, speed)
@@ -35,6 +35,7 @@ StepCounter = 0
 #Speed 0.001 = 100%
 
 WaitTime = (speed/100000)
+print WaitTime
 
 #main
 while StepCounter < steps:
