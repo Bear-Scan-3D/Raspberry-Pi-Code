@@ -8,7 +8,7 @@ try:
     steps = int(float(sys.argv[2]))
 except:
     steps = 0
-	print ("Keine Perimeter angegeben.")
+print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed")
 
 #Kontrollausgabe der Eingegebenen Perimeter
 print("Bewege den Motor %s Schritte nach %s.") % (steps, direction)
