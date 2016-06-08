@@ -34,7 +34,7 @@ StepCounter = 0
 #WaitTime = 0.001
 #Speed 0.001 = 100%
 
-WaitTime = float(speed/100000)
+WaitTime = float(speed)/100000
 print WaitTime
 
 #main
