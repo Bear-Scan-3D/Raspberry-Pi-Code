@@ -32,9 +32,11 @@ StepCounter = 0
 
 #Geschwindigkeit wird durch eine Wartezeit zwischen den Schritten realisiert
 #WaitTime = 0.001
-#Speed 0.001 = 100%
+#Speed  0.001 = 100%
+#       0.0025= 75%
+#       0.002 = 50%
 
-WaitTime = float(speed)/100000
+WaitTime = float(speed)*0.000001
 print WaitTime
 
 #main
