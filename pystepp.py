@@ -39,7 +39,7 @@ while StepCounter < steps:
     #einmaliger Wechsel zwischen an und aus = Easydriver macht einen Step
     gpio.output(24, True)
     gpio.output(24, False)
-    StepCounter ++ #= 1
+    StepCounter += 1
 
     #wartezeit
     time.sleep(WaitTime)
