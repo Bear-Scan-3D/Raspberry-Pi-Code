@@ -5,7 +5,7 @@ import time
 #Variablen ins Programm uebergeben
 try: 
     direction = sys.argv[1]
-    steps = int(float(sys.argv[2]))
+    steps = int(float(sys.argv[2])) #Microstepping 1/8 ist an
     speed = int(sys.argv[3])
 except:
     steps = 0
@@ -29,6 +29,13 @@ elif direction == 'right':
 	
 #Schrittzaehler initialisieren
 StepCounter = 0
+
+#Berechnung der Schritte aus Winkel
+#Steppermotor hat 1.8 Degree per Step
+#Microstepping 1/8 Schritte an 
+# Also 200 volle Steps für 360° und 1600 Microsteps 
+#Beispiel: 18 Grad -> 18/1.8 =10 -> 10*8 = 80
+WinkelSteps = int((grad/1.8)*8)
 
 #Geschwindigkeit wird durch eine Wartezeit zwischen den Schritten realisiert
 #WaitTime = 0.001
