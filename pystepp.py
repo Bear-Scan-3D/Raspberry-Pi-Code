@@ -33,9 +33,9 @@ StepCounter = 0
 #Berechnung der Schritte aus Winkel
 #Steppermotor hat 1.8 Degree per Step
 #Microstepping 1/8 Schritte an 
-# Also 200 volle Steps für 360 Grad und 1600 Microsteps 
+#Also 200 volle Steps für 360 Grad und 1600 Microsteps 
 #Beispiel: 18 Grad -> 18/1.8 =10 -> 10*8 = 80
-WinkelSteps = int((grad/1.8)*8)
+#WinkelSteps = int((grad/1.8)*8)
 
 #Geschwindigkeit wird durch eine Wartezeit zwischen den Schritten realisiert
 #WaitTime = 0.001
@@ -44,7 +44,7 @@ WinkelSteps = int((grad/1.8)*8)
 #       0.002 = 50%
 
 WaitTime = float(speed)*0.000001
-print WaitTime
+print (WaitTime)
 
 #main
 while StepCounter < steps:
