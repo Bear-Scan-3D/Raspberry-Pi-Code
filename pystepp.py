@@ -4,9 +4,9 @@ import time
 
 #Variablen ins Programm uebergeben
 try: 
- direction = sys.argv[1]
- steps = int(float(sys.argv[2]))
- speed = sys.argv[3]
+    direction = sys.argv[1]
+    steps = int(float(sys.argv[2]))
+    speed = sys.argv[3]
 except:
     steps = 0
 print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed")
