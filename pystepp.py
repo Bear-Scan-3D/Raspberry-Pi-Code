@@ -1,6 +1,7 @@
 import sys
 import RPi.GPIO as gpio #https://pypi.python.org/pypi/RPi.GPIO
 import time
+import picamera
 
 #Variablen ins Programm uebergeben
 try: 
@@ -9,11 +10,11 @@ try:
     speed = int(sys.argv[3])
 except:
     print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
-    direction = input("Richtung: ")
-    print (direction)
+    direction = raw_input("Richtung: ")#weil man sonst alles mit "..." angeben muss
+    raw_input("Press Enter to continue...")#wait for any key
     AnzahlFotos = input("Anzahl der Fotos: ")
     speed = input("Speed:")
-    
+    print("dir= %s AnzahlFotos %s Speed= %s") % (direction, AnzahlFotos, speed)
     
 
 #Kontrollausgabe der Eingegebenen Perimeter
@@ -26,28 +27,34 @@ gpio.setmode(gpio.BCM)
 gpio.setup(23, gpio.OUT)
 gpio.setup(24, gpio.OUT)
 
+#Kamera initialisieren
+#camera = picamera.PiCamera()
+
 #==============================================================
 #==============================================================
 #Funktionen
 def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
+    
     while StepCounter<steps:
-
         #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
         gpio.output(24, True)
         gpio.output(24, False)
         StepCounter += 1
-
+        
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
         time.sleep(0.001)
     return
 
 def AnzahlFotosToSteps(AnzahlFotos):
-    AnzahlSteps = 0
     AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
     return AnzahlSteps
 
+#def Fotoaufnehmen (indx)
+    #camera.capture('Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
+    #return 
+    
 #==============================================================
 #Richtung festlegen GPIO = 23
 if str(direction) == 'left':
@@ -87,12 +94,11 @@ while moveCounter<AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ("Schritt:", moveCounter)
     moveCounter +=1
+    #Fotoaufnehmen (moveCounter)
     time.sleep(1000) #Wartezeit zwischen den einzelnen Fotos
     
 
     
-
-
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 
