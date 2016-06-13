@@ -31,7 +31,7 @@ gpio.setup(24, gpio.OUT)
 def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
-    while StepCounter < steps:
+    while StepCounter<steps:
 
         #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
         gpio.output(24, True)
@@ -82,7 +82,7 @@ AnzahlSteps = 0
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 
 moveCounter = 0
-while moveCounter < AnzahlFotos
+while moveCounter<AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ("Schritt:", moveCounter)
     moveCounter +=1
