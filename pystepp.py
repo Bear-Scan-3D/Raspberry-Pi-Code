@@ -10,6 +10,7 @@ try:
 except:
     print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
     direction = input("Richtung: ")
+    print (direction)
     AnzahlFotos = input("Anzahl der Fotos: ")
     speed = input("Speed:")
     
@@ -49,9 +50,9 @@ def AnzahlFotosToSteps(AnzahlFotos):
 
 #==============================================================
 #Richtung festlegen GPIO = 23
-if direction == 'left':
+if str(direction) == 'left':
     gpio.output(23, True)
-elif direction == 'right':
+elif str(direction) == 'right':
     gpio.output(23, False)
 	
 
