@@ -28,7 +28,7 @@ gpio.setup(24, gpio.OUT)
 #==============================================================
 #==============================================================
 #Funktionen
-def moveStepper (steps)
+def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
     while StepCounter < steps:
@@ -42,7 +42,7 @@ def moveStepper (steps)
         time.sleep(0.001)
     return
 
-def AnzahlFotosToSteps (AnzahlFotos)
+def AnzahlFotosToSteps(AnzahlFotos):
     AnzahlSteps = 0
     AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
     return AnzahlSteps
