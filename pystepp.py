@@ -52,7 +52,7 @@ def moveStepper(steps):
     return
     
 def enableMotor(motorZustand):
-    if motorZustand
+    if bool(motorZustand)==True
         gpio.output(23, False)
         print('Motor AN')
     elif
@@ -110,6 +110,7 @@ print ("Starte Hauptprogramm")
 AnzahlSteps = 0
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 checkDirectory()
+
 enableMotor(True)
 
 moveCounter = 0
