@@ -2,6 +2,7 @@ import sys
 import RPi.GPIO as gpio #https://pypi.python.org/pypi/RPi.GPIO
 import time
 import picamera
+import os
 
 #Variablen ins Programm uebergeben
 try: 
