@@ -58,7 +58,7 @@ def AnzahlFotosToSteps(AnzahlFotos):
     #return 
     
 #def checkDirectory():
-    #print str(os.path.exists("/home)")
+    print (os.path.exists("/home)"))
     #if not os.path.exists(directory):
     #   os.makedirs(directory)
     
@@ -105,7 +105,7 @@ while moveCounter<AnzahlFotos:
     #Fotoaufnehmen (moveCounter)
     camera.led = False
     time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
-    print str(os.path.exists("/home)")
+    checkDirectory()
     camera.led = True
     
 
