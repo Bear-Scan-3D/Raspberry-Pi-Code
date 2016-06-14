@@ -10,8 +10,9 @@ try:
     speed = int(sys.argv[3])
 except:
     print ("Keine Perimeter angegeben. Bitte angeben: programmname.py Richtung Schritte Speed\nRichtung= right oder left\nSchritte= z.B. 200\nSpeed in % max 100")
-    direction = raw_input("Richtung: ")#weil man sonst alles mit "..." angeben muss
-    raw_input("Press Enter to continue...")#wait for any key
+    #direction = raw_input("Richtung: ")#weil man sonst alles mit "..." angeben muss
+    direction = "right"
+    #raw_input("Press Enter to continue...")#wait for any key
     AnzahlFotos = input("Anzahl der Fotos: ")
     #speed = input("Speed:")
     print("dir= %s AnzahlFotos %s") % (direction, AnzahlFotos)
