@@ -13,8 +13,8 @@ except:
     direction = raw_input("Richtung: ")#weil man sonst alles mit "..." angeben muss
     raw_input("Press Enter to continue...")#wait for any key
     AnzahlFotos = input("Anzahl der Fotos: ")
-    speed = input("Speed:")
-    print("dir= %s AnzahlFotos %s Speed= %s") % (direction, AnzahlFotos, speed)
+    #speed = input("Speed:")
+    print("dir= %s AnzahlFotos %s") % (direction, AnzahlFotos)
     
 
 #Kontrollausgabe der Eingegebenen Perimeter
@@ -95,7 +95,7 @@ while moveCounter<AnzahlFotos:
     print ("Schritt:", moveCounter)
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
-    time.sleep(1000) #Wartezeit zwischen den einzelnen Fotos
+    #time.sleep(10) #Wartezeit zwischen den einzelnen Fotos
     
 
     
