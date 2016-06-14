@@ -57,6 +57,12 @@ def AnzahlFotosToSteps(AnzahlFotos):
     #camera.capture('Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
     #return 
     
+def checkDirectory():
+    print str(os.path.exists("/home)")
+    #if not os.path.exists(directory):
+     #   os.makedirs(directory)
+    return
+    
 #==============================================================
 #Richtung festlegen GPIO = 23
 if str(direction) == 'left':
@@ -99,6 +105,7 @@ while moveCounter<AnzahlFotos:
     #Fotoaufnehmen (moveCounter)
     camera.led = False
     time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
+    checkDirectory()
     camera.led = True
     
 
