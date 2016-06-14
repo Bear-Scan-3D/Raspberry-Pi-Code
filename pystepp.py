@@ -61,7 +61,6 @@ def checkDirectory():
     print str(os.path.exists("/home)")
     #if not os.path.exists(directory):
      #   os.makedirs(directory)
-    return
     
 #==============================================================
 #Richtung festlegen GPIO = 23
