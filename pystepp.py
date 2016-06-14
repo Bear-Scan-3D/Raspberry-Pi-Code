@@ -53,10 +53,10 @@ def moveStepper(steps):
     
 def enableMotor(motorZustand):
     if motorZustand:
-        gpio.output(25, False)
+        gpio.output(25, True)
         print('Motor AN')
     else:
-        gpio.output(25, True)
+        gpio.output(25, False)
         print('Motor AUS')
     return
 
