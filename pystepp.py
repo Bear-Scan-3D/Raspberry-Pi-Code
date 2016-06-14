@@ -70,7 +70,7 @@ def AnzahlFotosToSteps(AnzahlFotos):
     #return 
     
 def checkDirectory():
-    print (os.path.exists('/home/pi/Pictures'))
+    print ('Directory Vorhanden: ',os.path.exists('/home/pi/Pictures'))
     #if not os.path.exists(directory):
     #   os.makedirs(directory)
     return
@@ -124,7 +124,8 @@ while moveCounter<AnzahlFotos:
     camera.led = True
     
 enableMotor(False) #Schaltet den Motor vor Ende des programms aus
-    
+raw_input("Teste Sleep...")#wait for any key
+
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 
