@@ -97,9 +97,9 @@ while moveCounter<AnzahlFotos:
     print ("Schritt:", moveCounter)
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
-    camera.led = false
+    camera.led = False
     time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
-    camera.led = true
+    camera.led = True
     
 
     
