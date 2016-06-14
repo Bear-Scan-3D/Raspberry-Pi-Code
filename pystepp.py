@@ -95,7 +95,7 @@ while moveCounter<AnzahlFotos:
     print ("Schritt:", moveCounter)
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
-    #time.sleep(10) #Wartezeit zwischen den einzelnen Fotos
+    time.sleep(10) #Wartezeit zwischen den einzelnen Fotos
     
 
     
