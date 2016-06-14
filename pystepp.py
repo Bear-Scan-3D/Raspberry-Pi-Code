@@ -57,11 +57,11 @@ def AnzahlFotosToSteps(AnzahlFotos):
     #camera.capture('Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
     #return 
     
-#def checkDirectory():
+def checkDirectory():
     print (os.path.exists("/home)"))
     #if not os.path.exists(directory):
     #   os.makedirs(directory)
-    
+    return
     
 #==============================================================
 #Richtung festlegen GPIO = 23
