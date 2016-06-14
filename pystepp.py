@@ -26,8 +26,9 @@ except:
 gpio.setmode(gpio.BCM)
 #GPIO23 = Dir
 #GPIO24 = Step
-gpio.setup(23, gpio.OUT)
-gpio.setup(24, gpio.OUT)
+gpio.setup(23, gpio.OUT) #Dir
+gpio.setup(24, gpio.OUT) #Step
+gpio.setup(25, gpio.OUT) #enable pin
 
 #Kamera initialisieren
 camera = picamera.PiCamera()
@@ -38,7 +39,7 @@ camera = picamera.PiCamera()
 def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
-    
+    gpio.output(25, false) #stellt sicher, dass der Motortreiber vor dem Bewegen enabled ist
     while StepCounter<steps:
         #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
         gpio.output(24, True)
@@ -47,6 +48,16 @@ def moveStepper(steps):
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
         time.sleep(0.001)
+    gpio.output(25, true) #disabled den motortreiber, spart strom und kein Hitzestau
+    return
+    
+def enableMotor(motorZustand):
+    if motorZustand==True
+        gpio.output(23, False)
+        print('Motor AN')
+    elif motorZustand==False
+        gpio.output(23, True)
+        print('Motor AUS')
     return
 
 def AnzahlFotosToSteps(AnzahlFotos):
@@ -59,7 +70,7 @@ def AnzahlFotosToSteps(AnzahlFotos):
     #return 
     
 def checkDirectory():
-    print (os.path.exists("/home)"))
+    print (os.path.exists('/home/pi/Pictures'))
     #if not os.path.exists(directory):
     #   os.makedirs(directory)
     return
@@ -95,8 +106,11 @@ elif str(direction) == 'right':
 
 #main
 print ("Starte Hauptprogramm")
+
 AnzahlSteps = 0
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
+checkDirectory()
+enableMotor(True)
 
 moveCounter = 0
 while moveCounter<AnzahlFotos:
@@ -106,10 +120,9 @@ while moveCounter<AnzahlFotos:
     #Fotoaufnehmen (moveCounter)
     camera.led = False
     time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
-    checkDirectory()
     camera.led = True
     
-
+enableMotor(False) #Schaltet den Motor vor Ende des programms aus
     
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
