@@ -49,6 +49,7 @@ def moveStepper(steps):
 
 def AnzahlFotosToSteps(AnzahlFotos):
     AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
+    print ("AnzahlSteps: ", AnzahlSteps)
     return AnzahlSteps
 
 #def Fotoaufnehmen (indx)
@@ -95,7 +96,7 @@ while moveCounter<AnzahlFotos:
     print ("Schritt:", moveCounter)
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
-    time.sleep(10) #Wartezeit zwischen den einzelnen Fotos
+    time.sleep(1) #Wartezeit zwischen den einzelnen Fotos
     
 
     
