@@ -39,7 +39,7 @@ camera = picamera.PiCamera()
 def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
-    gpio.output(25, False) #stellt sicher, dass der Motortreiber vor dem Bewegen enabled ist
+    #gpio.output(25, False) #stellt sicher, dass der Motortreiber vor dem Bewegen enabled ist
     while StepCounter<steps:
         #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
         gpio.output(24, True)
@@ -48,7 +48,7 @@ def moveStepper(steps):
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
         time.sleep(0.001)
-    gpio.output(25, true) #disabled den motortreiber, spart strom und kein Hitzestau
+    #gpio.output(25, True) #disabled den motortreiber, spart strom und kein Hitzestau
     return
     
 def enableMotor(motorZustand):
