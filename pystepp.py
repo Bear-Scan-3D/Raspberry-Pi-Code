@@ -47,7 +47,7 @@ def moveStepper(steps):
         StepCounter += 1
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
-        time.sleep(0.01)#0.001 pretty good
+        time.sleep(0.0005)#0.001 pretty good
     return
     
 def enableMotor(motorZustand):
@@ -66,7 +66,8 @@ def AnzahlFotosToSteps(AnzahlFotos):
 
 def Fotoaufnehmen (indx, fotoPfad):
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
-    camera.capture('%s/Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % fotoPfad, indx)
+    camera.capture('%s/%d.jpg' % fotoPfad, indx)
+    #camera.capture('%s/Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % fotoPfad, indx)
     return 
     
     
