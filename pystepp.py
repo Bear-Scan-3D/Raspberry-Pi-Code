@@ -3,6 +3,7 @@ import RPi.GPIO as gpio #https://pypi.python.org/pypi/RPi.GPIO
 import time
 import picamera
 import os
+from datetime import datetime, timedelta
 
 #Variablen ins Programm uebergeben
 try: 
@@ -39,7 +40,6 @@ camera = picamera.PiCamera()
 def moveStepper(steps):
     #Schrittzaehler initialisieren
     StepCounter = 0
-    #gpio.output(25, False) #stellt sicher, dass der Motortreiber vor dem Bewegen enabled ist
     while StepCounter<steps:
         #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
         gpio.output(24, True)
@@ -47,8 +47,7 @@ def moveStepper(steps):
         StepCounter += 1
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
-        time.sleep(0.001)
-    #gpio.output(25, True) #disabled den motortreiber, spart strom und kein Hitzestau
+        time.sleep(0.01)#0.001 pretty good
     return
     
 def enableMotor(motorZustand):
@@ -65,15 +64,11 @@ def AnzahlFotosToSteps(AnzahlFotos):
     print ('AnzahlSteps: ', AnzahlSteps)
     return AnzahlSteps
 
-def Fotoaufnehmen (indx):
-    
-    camera.capture('Scan_{/home/pitimestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
+def Fotoaufnehmen (indx, fotoPfad):
+    print('index: ', indx, 'FotoPfad: ', fotoPfad)
+    camera.capture('%s/Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % fotoPfad, indx)
     return 
     
-def checkDirectory():
-    print ('Directory Vorhanden: ',os.path.exists('/home/pi/Pictures'))
-    
-    return
     
 def makeDirectory(dirPfad, dirName):
     fullDir = dirPfad + dirName
@@ -116,7 +111,14 @@ print ("Starte Hauptprogramm")
 
 AnzahlSteps = 0
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
-checkDirectory()
+
+#directorytest
+#dirPfad = raw_input('dirPfad: ')
+dirPfad = '/home/pi/RaspiCode/'
+dirName = raw_input('Name des Scans: ')
+speicherPfad = makeDirectory(dirPfad, dirName)
+print('Ganzer Pfad:', speicherPfad)
+
 
 enableMotor(True)
 
@@ -126,17 +128,14 @@ while moveCounter<AnzahlFotos:
     print ("Schritt:", moveCounter)
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
-    camera.led = False
-    time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
     camera.led = True
+    time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
+    Fotoaufnehmen(moveCounter, speicherPfad)
+    camera.led = False
     
 enableMotor(False) #Schaltet den Motor vor Ende des programms aus
 
-#directorytest
-#dirPfad = raw_input('dirPfad: ')
-dirPfad = '/home/pi/RaspiCode/'
-dirName = raw_input('Name des Scans: ')
-print('Ganzer Pfad:', makeDirectory(dirPfad, dirName))
+
 
 raw_input("Teste Sleep...")#wait for any key
 
