@@ -65,10 +65,10 @@ def AnzahlFotosToSteps(AnzahlFotos):
     print ('AnzahlSteps: ', AnzahlSteps)
     return AnzahlSteps
 
-def Fotoaufnehmen (indx)
+def Fotoaufnehmen (indx):
     
     camera.capture('Scan_{/home/pitimestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
-    #return 
+    return 
     
 def checkDirectory():
     print ('Directory Vorhanden: ',os.path.exists('/home/pi/Pictures'))
