@@ -64,9 +64,9 @@ def AnzahlFotosToSteps(AnzahlFotos):
     print ('AnzahlSteps: ', AnzahlSteps)
     return AnzahlSteps
 
-def Fotoaufnehmen (indx, fotoPfad):
+def Fotoaufnehmen (indx, fotoPfad, scanName):
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
-    camera.capture(str(fotoPfad)+ '/'+ str(indx)+ '.jpg')
+    camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(indx)+ '.jpg')
     #camera.capture('%s/Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % fotoPfad, indx)
     return 
     
@@ -130,11 +130,11 @@ while moveCounter<AnzahlFotos:
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
     camera.led = True
-    time.sleep(1) #Wartezeit zwischen den einzelnen Fotos,
-    Fotoaufnehmen(moveCounter, speicherPfad)
+    time.sleep(2) #Wartezeit zwischen den einzelnen Fotos,
+    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
     
-enableMotor(False) #Schaltet den Motor vor Ende des programms aus
+enableMotor(False) #Schaltet den Motor vor Ende des Programms aus
 
 
 
