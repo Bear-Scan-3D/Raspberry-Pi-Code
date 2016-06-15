@@ -66,7 +66,7 @@ def AnzahlFotosToSteps(AnzahlFotos):
 
 def Fotoaufnehmen (indx, fotoPfad):
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
-    camera.capture(str(indx)+ '.jpg')
+    camera.capture(str(fotoPfad)+ '/'+ str(indx)+ '.jpg')
     #camera.capture('%s/Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % fotoPfad, indx)
     return 
     
