@@ -132,8 +132,8 @@ while moveCounter<AnzahlFotos:
 enableMotor(False) #Schaltet den Motor vor Ende des programms aus
 
 #directorytest
-dirPfad = input('dirPfad: ')
-dirName = input('dirName: ')
+dirPfad = raw_input('dirPfad: ')
+dirName = raw_input('dirName: ')
 print('Ganzer Pfad:', makeDirectory(dirPfad, dirName))
 
 raw_input("Teste Sleep...")#wait for any key
