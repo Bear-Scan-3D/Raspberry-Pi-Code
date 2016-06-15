@@ -65,15 +65,21 @@ def AnzahlFotosToSteps(AnzahlFotos):
     print ('AnzahlSteps: ', AnzahlSteps)
     return AnzahlSteps
 
-#def Fotoaufnehmen (indx)
-    #camera.capture('Scan_{timestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
+def Fotoaufnehmen (indx)
+    
+    camera.capture('Scan_{/home/pitimestamp:%Y-%m-%d-%H-%M}_%s.jpg' % indx)
     #return 
     
 def checkDirectory():
     print ('Directory Vorhanden: ',os.path.exists('/home/pi/Pictures'))
-    #if not os.path.exists(directory):
-    #   os.makedirs(directory)
+    
     return
+    
+def makeDirectory(dirPfad, dirName):
+    fullDir = dirPfad + dirName
+    #if not os.path.exists(directory):
+    #    os.makedirs(directory)
+    return fullDir
     
 #==============================================================
 #Richtung festlegen GPIO = 23
@@ -124,6 +130,12 @@ while moveCounter<AnzahlFotos:
     camera.led = True
     
 enableMotor(False) #Schaltet den Motor vor Ende des programms aus
+
+#directorytest
+dirPfad = input('dirPfad: ')
+dirName = input('dirName: ')
+print('Ganzer Pfad:', makeDirectory(dirPfad, dirName))
+
 raw_input("Teste Sleep...")#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
