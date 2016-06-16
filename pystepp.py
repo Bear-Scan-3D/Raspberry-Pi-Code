@@ -71,6 +71,7 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
 
 def setupCamera():#setzt die Parameter der Cam
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
+    camera.iso = 100
     Empf = camera.iso
     print ('ISO: ', Empf)
     
