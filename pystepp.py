@@ -61,7 +61,6 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     return 
     
 def makeDirectory(dirPfad, dirName):
-    #erstellt ein Verzeichnis für die Fotos
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir):
         os.makedirs(fullDir)
