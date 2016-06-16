@@ -57,7 +57,7 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
     camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(indx)+ '.jpg')
-    print('Foto '+ str(indx)+ 'aufgenommen: '+ {timestamp:%Y-%m-%d-%H-%M})
+    print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return 
     
 def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis für die Fotos
