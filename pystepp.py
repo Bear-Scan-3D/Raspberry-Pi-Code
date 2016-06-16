@@ -62,14 +62,14 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return 
     
-def makeDirectory(dirPfad, dirName):
+def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir):
         os.makedirs(fullDir)
     print('Existiert nun der Pfad: ',str(os.path.exists(fullDir))) 
     return fullDir
 
-def setupCamera(lighting):
+def setupCamera():#setzt die Parameter der Cam
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
     Empf = camera.iso
     print ('ISO: ', Empf)
@@ -130,7 +130,8 @@ while moveCounter < AnzahlFotos:
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
     camera.led = True
-    time.sleep(2) #Wartezeit zwischen den einzelnen Fotos,
+    time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
+    setupCamera()
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
     
