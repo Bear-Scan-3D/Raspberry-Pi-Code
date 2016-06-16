@@ -1,10 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 import RPi.GPIO as gpio
 import time
 import picamera
 import os
 from datetime import datetime, timedelta
-
 
 #=======================================================================
 #Initialisierungen
@@ -68,7 +70,7 @@ def makeDirectory(dirPfad, dirName):
     return fullDir
 
 def setupCamera(lighting):
-    camera.resolution = (2592, 1944)#5Megapixel Auflösung/volle Auflösung
+    camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
     Empf = camera.iso
     print ('ISO: ', Empf)
     
