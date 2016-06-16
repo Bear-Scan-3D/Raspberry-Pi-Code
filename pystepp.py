@@ -60,7 +60,8 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return 
     
-def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis für die Fotos
+def makeDirectory(dirPfad, dirName):
+    #erstellt ein Verzeichnis für die Fotos
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir):
         os.makedirs(fullDir)
