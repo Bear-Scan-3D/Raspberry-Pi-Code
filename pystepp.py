@@ -68,15 +68,17 @@ def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis für die Fotos
     return fullDir
 
 def setupCamera(lighting):
-    camera.resolution = (2592, 1944)#5Megapixel Auflösung
+    camera.resolution = (2592, 1944)#5Megapixel Auflösung/volle Auflösung
     Empf = camera.iso
     print ('ISO: ', Empf)
+    
+    
     #ISO etwas höher stellen als Auto damit overexposed und bessere scans?
-    if lighting:
-        print('gute Lichtverhältnisse')
-    else:
-        print('schlechte Lichtverhältnisse')
-        camera.iso = 800
+    #if lighting:
+    #    print('gute Lichtverhältnisse')
+    #else:
+    #    print('schlechte Lichtverhältnisse')
+    #    camera.iso = 800
     #camera.start_preview()
     return
 #========================================================================
