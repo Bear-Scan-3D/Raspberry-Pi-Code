@@ -42,10 +42,8 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
     if motorZustand:
         gpio.output(25, True)
-        print('Motor AN')
     else:
         gpio.output(25, False)
-        print('Motor AUS')
     return
 
 def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anzahl der Fotos
@@ -53,7 +51,6 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 #Microstepping 1/8 Schritte an 
 #Also 200 volle Steps /1600 Microsteps fuer 360 Grad 
     AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
-    print ('AnzahlSteps: ', AnzahlSteps)
     return AnzahlSteps
 
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
@@ -65,65 +62,57 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
 def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir):
-        os.makedirs(fullDir)
-    print('Existiert nun der Pfad: ',str(os.path.exists(fullDir))) 
+        os.makedirs(fullDir) 
     return fullDir
 
-def setupCamera():#setzt die Parameter der Cam
+def setupCamera(lighting):#setzt die Parameter der Cam
     print('Kamera wird vorgewärmt')
     time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
-    overExposerValue = 1000
-    camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
-    print('ISO-PRE: ', camera.iso)
-    camera.iso = 200 
-    print('ISO-AFTER: ', camera.iso)
-    bufferAll = camera.exposure_speed
-    bufferAll = int(bufferAll) + overExposerValue
-    print('Shutter-PRE: ', bufferAll)
-    camera.shutter_speed = int(bufferAll)
-    print('Shutter-AFTER: ', bufferAll)
-    camera.exposure_mode = 'off'
     
-    whiteBalanceBuffer = camera.awb_gains
-    camera.awb_mode = 'off'
-    camera.awb_gains = whiteBalanceBuffer
+    overExposerValue = 1000
+    
+    camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
     
     camera.sharpness = 0
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
-    print('Einstellungen gespeichert')
     
+    if lighting:#Gute Lichtverhaeltnisse
+        camera.iso = 200 
+        
+        bufferAll = camera.exposure_speed
+        bufferAll = int(bufferAll) + overExposerValue
+        camera.shutter_speed = int(bufferAll)
+        
+        
+    else:#schlechte lichverhaeltnisse
+        camera.iso = 800
+        camera.shutter_speed = 2000000 #2Sekunden verschlusszeit
+        
+    camera.exposure_mode = 'off'
+    whiteBalanceBuffer = camera.awb_gains
+    camera.awb_mode = 'off'
+    camera.awb_gains = whiteBalanceBuffer
     
-    #ISO etwas höher stellen als Auto damit overexposed und bessere scans?
-    #if lighting:
-    #    print('gute Lichtverhältnisse')
-    #else:
-    #    print('schlechte Lichtverhältnisse')
-    #    camera.iso = 800
-    #camera.start_preview()
     return
+
 #========================================================================
 #Parameter vom User erfragen
 #========================================================================
 
 try: #Variablen ins Programm uebergeben
     AnzahlFotos = int(sys.argv[1])
-    direction = 'right'
-    #speed = int(sys.argv[2])
 except: #oder im Programm abfragen
     print ('Keine Perimeter angegeben. Bitte Anzahl der Fotos angeben')
-    #direction = raw_input("Richtung: ")#weil man sonst alles mit " " angeben muss
-    direction = 'right'
-    #raw_input("Press Enter to continue...")#wait for any key
     AnzahlFotos = input("Anzahl der Fotos: ")
-    #speed = input("Speed:")
-    print("dir= %s AnzahlFotos %s") % (direction, AnzahlFotos)
     
 #========================================================================
 #MAIN
 #========================================================================
+
+direction = 'right'
 
 #Richtung festlegen GPIO = 23
 if str(direction) == 'left':
@@ -134,42 +123,39 @@ elif str(direction) == 'right':
 #Variablen
 AnzahlSteps = 0
 moveCounter = 0
+licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft
 
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 
-enableMotor(False)#Easydriver vor Bewegung anschalten
+enableMotor(False)
 
 #dirPfad = raw_input('dirPfad: ')
 dirPfad = '/home/pi/RaspiCode/'
 dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
-print('Ganzer Pfad:', speicherPfad)
-setupCamera()
+print('Ganzer Pfad: ', speicherPfad)
+
+setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
-    print ("Schritt:", moveCounter)
+    print ('Schritt: ', moveCounter)
     moveCounter +=1
-    #Fotoaufnehmen (moveCounter)
+    
     camera.led = True
     #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
-    #camera.stop_preview()
-    
+
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
-raw_input("Teste Sleep...")#wait for any key
+raw_input('Motor Sleep')#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 camera.close()
-
-
-print ("Programm beendet.")
-
 
 
 
