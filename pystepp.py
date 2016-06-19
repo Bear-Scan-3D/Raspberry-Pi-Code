@@ -70,15 +70,30 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
     return fullDir
 
 def setupCamera():#setzt die Parameter der Cam
+    print('Kamera wird vorgewärmt')
+    sleep(2)
+    print('Kamera fertig. Einstellungen werden gespeichert')
+    overExposerValue = 100
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
     print('ISO-PRE: ', camera.iso)
-    camera.iso = 100 
+    camera.iso = 200 
     print('ISO-AFTER: ', camera.iso)
     bufferAll = camera.exposure_speed
+    bufferAll = int(bufferAll) + overExposerValue
     print('Shutter-PRE: ', bufferAll)
-    #camera.shutter_speed = int(bufferAll)
+    camera.shutter_speed = int(bufferAll)
     print('Shutter-AFTER: ', bufferAll)
+    camera.exposure_mode = 'off'
     
+    whiteBalanceBuffer = camera.awb_gains
+    camera.awb_mode = 'off'
+    camera.awb_gains = whiteBalanceBuffer
+    
+    camera.sharpness = 0
+    camera.contrast = 0
+    camera.brightness = 50
+    camera.saturation = 0
+    print('Einstellungen gespeichert')
     
     
     #ISO etwas höher stellen als Auto damit overexposed und bessere scans?
@@ -122,12 +137,14 @@ moveCounter = 0
 
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 
+enableMotor(False)#Easydriver vor Bewegung anschalten
+
 #dirPfad = raw_input('dirPfad: ')
 dirPfad = '/home/pi/RaspiCode/'
 dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad:', speicherPfad)
-
+setupCamera()
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 while moveCounter < AnzahlFotos:
@@ -138,7 +155,6 @@ while moveCounter < AnzahlFotos:
     camera.led = True
     #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
-    setupCamera()
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
     #camera.stop_preview()
