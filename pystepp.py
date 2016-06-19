@@ -75,7 +75,9 @@ def setupCamera():#setzt die Parameter der Cam
     camera.iso = 100 
     print('ISO-AFTER: ', camera.iso)
     bufferAll = camera.exposure_speed
-    print('Shutter: ', bufferAll)
+    print('Shutter-PRE: ', bufferAll)
+    camera.exposure_speed = bufferAll
+    print('Shutter-AFTER: ', bufferAll)
     
     
     
