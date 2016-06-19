@@ -76,7 +76,7 @@ def setupCamera():#setzt die Parameter der Cam
     print('ISO-AFTER: ', camera.iso)
     bufferAll = camera.exposure_speed
     print('Shutter-PRE: ', bufferAll)
-    camera.shutter_speed = int(bufferAll)
+    #camera.shutter_speed = int(bufferAll)
     print('Shutter-AFTER: ', bufferAll)
     
     
@@ -136,7 +136,7 @@ while moveCounter < AnzahlFotos:
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
     camera.led = True
-    camera.start_preview(alpha=128, fullscreen=True)
+    #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     setupCamera()
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
