@@ -73,7 +73,7 @@ def setupCamera():#setzt die Parameter der Cam
     print('Kamera wird vorgewärmt')
     time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
-    overExposerValue = 100
+    overExposerValue = 1000
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
     print('ISO-PRE: ', camera.iso)
     camera.iso = 200 
