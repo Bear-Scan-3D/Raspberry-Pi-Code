@@ -71,9 +71,12 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
 
 def setupCamera():#setzt die Parameter der Cam
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
+    print('ISO-PRE: ', camera.iso)
     camera.iso = 100 
-    print('ISO: ', camera.iso)
-    print('Shutter: ', camera.exposure_speed)
+    print('ISO-AFTER: ', camera.iso)
+    bufferAll = camera.exposure_speed
+    print('Shutter: ', bufferAll)
+    
     
     
     #ISO etwas höher stellen als Auto damit overexposed und bessere scans?
@@ -131,10 +134,12 @@ while moveCounter < AnzahlFotos:
     moveCounter +=1
     #Fotoaufnehmen (moveCounter)
     camera.led = True
+    camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     setupCamera()
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
+    #camera.stop_preview()
     
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
