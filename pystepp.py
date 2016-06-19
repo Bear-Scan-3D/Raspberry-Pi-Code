@@ -71,7 +71,7 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
 
 def setupCamera():#setzt die Parameter der Cam
     print('Kamera wird vorgewärmt')
-    sleep(2)
+    time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
     overExposerValue = 100
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
