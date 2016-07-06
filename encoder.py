@@ -10,13 +10,12 @@ class KY040:
     CLOCKWISE = 0
     ANTICLOCKWISE = 1
     
-    def __init__(self, clockPin, dataPin, switchPin,
-                 rotaryCallback, switchCallback):
+    def __init__(self, clockPin, dataPin, switchPin, rotaryCallback, switchCallback):
         #persist values
         self.clockPin = clockPin
         self.dataPin = dataPin
         self.switchPin = switchPin
-        self.rotaryCallback = rotaryCallback
+        self.rotaryCallback = rotaryCallback #Settermethode
         self.switchCallback = switchCallback
 
         #setup pins
@@ -53,7 +52,7 @@ class KY040:
 #test
 if __name__ == "__main__":
     
-    CLOCKPIN = 5
+    CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
     DATAPIN = 6
     SWITCHPIN = 13
 
@@ -64,8 +63,7 @@ if __name__ == "__main__":
 
     GPIO.setmode(GPIO.BCM)
     
-    ky040 = KY040(CLOCKPIN, DATAPIN, SWITCHPIN,
-                  rotaryChange, switchPressed)
+    ky040 = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed) #initialisieerung des Objekts
 
     ky040.start()
 

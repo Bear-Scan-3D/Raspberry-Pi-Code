@@ -6,6 +6,8 @@ import RPi.GPIO as gpio
 import time
 import picamera
 import os
+
+import encoder.py
 from datetime import datetime, timedelta
 
 #=======================================================================
