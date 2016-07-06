@@ -20,7 +20,7 @@ gpio.setup(24, gpio.OUT) #Step
 gpio.setup(25, gpio.OUT) #enable pin
 
 #Kamera initialisieren
-camera = picamera.PiCamera()
+#camera = picamera.PiCamera()
 
 #========================================================================
 #Funktionen
@@ -155,7 +155,7 @@ raw_input('Motor Sleep')#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
-camera.close()
+#camera.close()
 
 
 
