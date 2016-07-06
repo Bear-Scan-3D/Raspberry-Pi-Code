@@ -65,6 +65,19 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
     if not os.path.exists(fullDir):
         os.makedirs(fullDir) 
     return fullDir
+    
+def getStepsforRevolution():
+    Schritter = 0
+    print('Schritter starten? (y/n)')
+    
+    while raw_input('Name des Scans: ')='y'
+        Stepper = raw_input('Wieviele Schritte?')
+        print('Schritter: '+Schritter)
+        moveStepper(int(stepper))
+        Schritter +=(int(stepper))
+        print('Weitere Schritte gehen?(y/n)')
+        
+    return 
 
 def setupCamera(lighting):#setzt die Parameter der Cam
     print('Kamera wird vorgewärmt')
@@ -138,7 +151,7 @@ print('Ganzer Pfad: ', speicherPfad)
 
 #setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
-
+getStepsforRevolution()
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
@@ -149,6 +162,7 @@ while moveCounter < AnzahlFotos:
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     #camera.led = False
+
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
