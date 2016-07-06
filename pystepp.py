@@ -50,8 +50,8 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 #Steppermotor hat 1.8 Degree per Step
 #Microstepping 1/8 Schritte an 
 #Also 200 volle Steps /1600 Microsteps fuer 360 Grad 
-    AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
-    AnzahlSteps = int(1600/AnzahlFotos) #neuer Wert Wegen anderen Pulleys
+    #AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
+    AnzahlSteps = int(2360/AnzahlFotos) #mit getStepsforRevolution herausgefunden
     return AnzahlSteps
 
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
@@ -149,7 +149,7 @@ print('Ganzer Pfad: ', speicherPfad)
 
 #setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
-getStepsforRevolution()
+#getStepsforRevolution()
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
