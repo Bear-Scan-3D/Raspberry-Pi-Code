@@ -51,7 +51,7 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 #Microstepping 1/8 Schritte an 
 #Also 200 volle Steps /1600 Microsteps fuer 360 Grad 
     AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
-    AnzahlSteps = int(800/AnzahlFotos) #neuer Wert Wegen anderen Pulleys
+    AnzahlSteps = int(1600/AnzahlFotos) #neuer Wert Wegen anderen Pulleys
     return AnzahlSteps
 
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
