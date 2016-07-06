@@ -75,7 +75,7 @@ def getStepsforRevolution():
         print('Schritter: ', Schritter)
         bauffer = int(Stepper)
         moveStepper(bauffer)
-        Schritter +=(int(stepper))
+        Schritter +=bauffer
         print('Weitere Schritte gehen?(y/n)')
         
     return 
