@@ -70,7 +70,7 @@ def getStepsforRevolution():
     Schritter = 0
     print('Schritter starten? (y/n)')
     
-    while raw_input('Name des Scans: ')='y'
+    while raw_input('Name des Scans: ')=='y'
         Stepper = raw_input('Wieviele Schritte?')
         print('Schritter: '+Schritter)
         moveStepper(int(stepper))
