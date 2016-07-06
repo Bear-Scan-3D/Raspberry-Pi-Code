@@ -36,7 +36,7 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
         StepCounter += 1
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
-        time.sleep(0.0005)#0.001 pretty good
+        time.sleep(0.001)#0.001 pretty good
     return
     
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
