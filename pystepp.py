@@ -68,16 +68,13 @@ def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
     
 def getStepsforRevolution():
     Schritter = 0
-    print('Schritter starten? (y/n)')
-    
-    while raw_input('Name des Scans: ')=='y':
+   
+    while raw_input('Schritter starten? (y/n)')=='y':
         Stepper = raw_input('Wieviele Schritte?')
-        print('Schritter: ', Schritter)
         bauffer = int(Stepper)
         moveStepper(bauffer)
         Schritter +=bauffer
-        print('Weitere Schritte gehen?(y/n)')
-        
+        print('Schritter: ', Schritter)
     return 
 
 def setupCamera(lighting):#setzt die Parameter der Cam
