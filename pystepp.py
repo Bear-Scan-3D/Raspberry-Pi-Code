@@ -135,7 +135,7 @@ dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
 
-setupCamera(licht)
+#setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 while moveCounter < AnzahlFotos:
@@ -143,11 +143,11 @@ while moveCounter < AnzahlFotos:
     print ('Schritt: ', moveCounter)
     moveCounter +=1
     
-    camera.led = True
+    #camera.led = True
     #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
-    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
-    camera.led = False
+    #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
+    #camera.led = False
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
