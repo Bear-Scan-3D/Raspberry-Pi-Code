@@ -4,11 +4,13 @@
 import sys
 import RPi.GPIO as gpio
 import time
+import datetime
+from Adafruit_7Segment import SevenSegment
 import picamera
 import os
 
 import encoder.py
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 
 #=======================================================================
 #Initialisierungen
@@ -24,6 +26,9 @@ gpio.setup(25, gpio.OUT) #enable pin
 #Kamera initialisieren
 #camera = picamera.PiCamera()
 
+#Display initialisieren
+#segment = SevenSegment(address=0x70)
+
 #========================================================================
 #Funktionen
 #========================================================================
@@ -38,7 +43,7 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
         StepCounter += 1
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
-        time.sleep(0.01)#0.001 pretty good
+        time.sleep(0.01)#je langsamer desto bessere kontrolle
     return
     
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
@@ -62,13 +67,13 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return 
     
-def makeDirectory(dirPfad, dirName):#macht ein verzeichnis
+def makeDirectory(dirPfad, dirName):#erstellt ein verzeichnis
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir):
         os.makedirs(fullDir) 
     return fullDir
     
-def getStepsforRevolution():
+def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Umdrehung (Durch Uebersetztung zwischen zwei verschiednene Pulleys bedingt)
     Schritter = 0
    
     while raw_input('Schritter starten? (y/n)')=='y':
@@ -112,27 +117,38 @@ def setupCamera(lighting):#setzt die Parameter der Cam
     
     return
 
+def setDirection(richtung):
+    if str(richtung) == 'left':
+        gpio.output(23, True)
+    elif str(richtung) == 'right':
+        gpio.output(23, False)
+    return
+    
+def getAnzahlFoto():
+    #schreibe einen Beispielwert ins Display(10)
+    segment.writeDigit(3, 1, dot=False)
+    segment.writeDigit(4, 0, dot=False)
+
+    return
 #========================================================================
 #Parameter vom User erfragen
 #========================================================================
 
 try: #Variablen ins Programm uebergeben
-    AnzahlFotos = int(sys.argv[1])
+    if sys.argv[1] != None:
+        AnzahlFotos = int(sys.argv[1])
+    else:
+        getAnzahlFoto()
 except: #oder im Programm abfragen
-    print ('Keine Perimeter angegeben. Bitte Anzahl der Fotos angeben')
-    AnzahlFotos = input("Anzahl der Fotos: ")
+    print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
+
+    #AnzahlFotos = input("Anzahl der Fotos: ")
     
 #========================================================================
 #MAIN
 #========================================================================
 
-direction = 'right'
-
-#Richtung festlegen GPIO = 23
-if str(direction) == 'left':
-    gpio.output(23, True)
-elif str(direction) == 'right':
-    gpio.output(23, False)
+setDirection('right')
 
 #Variablen
 AnzahlSteps = 0
