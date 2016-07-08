@@ -135,10 +135,10 @@ def getAnzahlFoto():
 #========================================================================
 
 try: #Variablen ins Programm uebergeben
-    if sys.argv[1] != None:
-        AnzahlFotos = int(sys.argv[1])
-    else:
+    if sys.argv[1] is None:
         getAnzahlFoto()
+    else:
+        AnzahlFotos = int(sys.argv[1])
 except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
 
