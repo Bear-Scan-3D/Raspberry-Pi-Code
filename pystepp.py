@@ -170,7 +170,6 @@ try: #Variablen ins Programm uebergeben
         AnzahlFotos = int(sys.argv[1])
 except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
-
     #AnzahlFotos = input("Anzahl der Fotos: ")
     
 #========================================================================
