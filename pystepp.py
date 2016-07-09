@@ -166,10 +166,15 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     return
 
 def writeMeta(pfad, name):
-    metafile = open('META-%s.txt', 'w') % (name)
-    metafile.write('Metadata\n', name)
-    metafile.close()
+    metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
 
+    if str(metaChoice) == 'y':
+
+        metafile = open('META-%s.txt', 'w') % (name)
+        metafile.write('Metadata\n', name)
+        metafile.close()
+    else:
+        print('Keine Metadaten angebene. Automatische Metadaten werden erfasst.')
     #Inhalt Metadatei
     #<name>Boris</name>
     #<setnumber>1</setnumber>
