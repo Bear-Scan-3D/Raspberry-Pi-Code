@@ -6,6 +6,7 @@ import RPi.GPIO as gpio
 import time
 import datetime
 from Adafruit_7Segment import SevenSegment
+from Rotary import KY040
 import picamera
 import os
 
@@ -28,6 +29,13 @@ gpio.setup(25, gpio.OUT) #enable pin
 
 #Display initialisieren
 #segment = SevenSegment(address=0x70)
+
+#Encoder initialisieren
+CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
+DATAPIN = 6
+SWITCHPIN = 13
+
+encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
 
 #========================================================================
 #Funktionen
@@ -128,6 +136,8 @@ def getAnzahlFoto():
     #schreibe einen Beispielwert ins Display(10)
     segment.writeDigit(3, 1, dot=False)
     segment.writeDigit(4, 0, dot=False)
+    
+    #
 
     return
 #========================================================================
