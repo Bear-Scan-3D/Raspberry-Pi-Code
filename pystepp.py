@@ -10,7 +10,6 @@ from Rotary import KY040
 import picamera
 import os
 
-import encoder.py
 #from datetime import datetime, timedelta
 
 #=======================================================================
