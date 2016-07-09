@@ -145,7 +145,17 @@ def setDirection(richtung):
     elif str(richtung) == 'right':
         gpio.output(23, False)
     return
-    
+
+def blinkDisplay(state):
+
+    if state:
+        setupDisplay(15,)
+    else:
+        gpio.output(25, False)
+
+
+    return
+
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
     segment.writeDigit(3, 1, dot=False)
@@ -156,8 +166,21 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     return
 
 def writeMeta(pfad, name):
-    metafile  = open('%s.txt', 'w') % (name)
+    metafile = open('META-%s.txt', 'w') % (name)
     metafile.write('Metadata\n', name)
+    metafile.close()
+
+    #Inhalt Metadatei
+    #<name>Boris</name>
+    #<setnumber>1</setnumber>
+    #<date>1999-11-15</date>            DIN ISO 8601 als JJJJ-MM-TT
+    #<timecode>11:25:33</timecode>
+    #<setcount>10</setcount>
+    #<description>Scan von Boris Borwisky</description>
+    #<keywords>human, russia, awesomness</keywords>
+    #<condition>mint - unbroken</condition>
+    #<rights>CC BY-NC 4.0</rights>
+    #<comment>schlechte Lichtbedingungen</comment>
     return
 #========================================================================
 #Parameter vom User erfragen
