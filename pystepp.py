@@ -124,6 +124,21 @@ def setupCamera(lighting):#setzt die Parameter der Cam
     
     return
 
+def setupDisplay(helligkeit, blinking):
+    if helligkeit >= 0 and helligkeit <= 15:
+        segment.setBrightness(helligkeit)
+    else:
+        segment.setBrightness(15)
+    if blinking >= 0 and blinking <= 3:
+        segment.setBlinkRate(blinking)
+        #0 = No Blinking
+        #1 = Blink at 2Hz
+        #2 = Blink at 1Hz
+        #3 = Blink at 1/2 Hz
+    else:
+        segment.setBlinkRate(0)
+    return
+
 def setDirection(richtung):
     if str(richtung) == 'left':
         gpio.output(23, True)
@@ -131,13 +146,18 @@ def setDirection(richtung):
         gpio.output(23, False)
     return
     
-def getAnzahlFoto():
+def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
     segment.writeDigit(3, 1, dot=False)
     segment.writeDigit(4, 0, dot=False)
     
     #
 
+    return
+
+def writeMeta(pfad, name):
+    metafile  = open('%s.txt', 'w') % (name)
+    metafile.write('Metadata\n', name)
     return
 #========================================================================
 #Parameter vom User erfragen
@@ -158,6 +178,7 @@ except: #oder im Programm abfragen
 #========================================================================
 
 setDirection('right')
+setupDisplay(15,0)
 
 #Variablen
 AnzahlSteps = 0
@@ -173,6 +194,7 @@ dirPfad = '/home/pi/RaspiCode/'
 dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
+writeMeta(speicherPfad, dirName)
 
 #setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
@@ -188,7 +210,6 @@ while moveCounter < AnzahlFotos:
     #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     #camera.led = False
 
-
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
 raw_input('Motor Sleep')#wait for any key
@@ -196,9 +217,5 @@ raw_input('Motor Sleep')#wait for any key
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 #camera.close()
-
-
-
-
 
 #ENDE

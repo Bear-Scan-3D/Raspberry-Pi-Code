@@ -5,7 +5,10 @@ Author: **Stefan Piernikarczyk**
 Masterarbeit 2016
 
 Low-Budget 3D Scanner als DIY-Projekt.
+
 Basierend auf Photogrammetrie.
+
+
 
 
 Nötige Ressourcen:
@@ -21,5 +24,6 @@ Fremdcode:
 - Adafruit_7Segment.py
 - Adafruit_I2C.py
 - Adafruit_LEDBackpack.py
+
 von **Adafruit Industries**
 
