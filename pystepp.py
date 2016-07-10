@@ -149,7 +149,7 @@ def setDirection(richtung):
 def blinkDisplay(state):
 
     if state:
-        setupDisplay(15,)
+        setupDisplay(15,0)
     else:
         gpio.output(25, False)
 
@@ -165,19 +165,34 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
 
     return
 
-def writeMeta(pfad, name):
+def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
+    metafile = open('META-%s.txt', 'w') % (name)
+    metafile.write('<name>', name, '</name>\n')
+    metafile.write('<setcount>', setcount, '</setcount>\n')
+    #NTP auf dem Raspberry Pi aktiviert?
+    timeYear = datetime.date.year + '-' + datetime.date.month + '-' + datetime.date.day
+    metafile.write('<date>', str(timeYear), '</date>\n')
+    timeNow = datetime.time.hour + ':' + datetime.time.minute + ':' + datetime.time.second
+    metafile.write('<timecode>', str(timeNow), '</timecode>\n')
 
     if str(metaChoice) == 'y':
-
-        metafile = open('META-%s.txt', 'w') % (name)
-        metafile.write('Metadata\n', name)
-        metafile.close()
+        metaBuffer = raw_input('Beschreibung: ')
+        metafile.write('<description>', str(metaBuffer), '</description>\n')
+        metaBuffer = raw_input('Stichwoerter: (Bsp.: human, russia, awesomeness )')
+        metafile.write('<keywords>', metaBuffer, '</keywords>\n')
+        metaBuffer = raw_input('Zustand: ')
+        metafile.write('<condition>', metaBuffer, '</condition>\n')
+        metaBuffer = raw_input('Copyright: ')
+        metafile.write('<rights>', metaBuffer, '</rights>\n')
+        metaBuffer = raw_input('Weitere Kommentare: ')
+        metafile.write('<comment>', metaBuffer, '</comment>\n')
     else:
-        print('Keine Metadaten angebene. Automatische Metadaten werden erfasst.')
+        print('Keine Metadaten angebene. Automatische Metadaten wurden erfasst.')
+
+    metafile.close()
     #Inhalt Metadatei
     #<name>Boris</name>
-    #<setnumber>1</setnumber>
     #<date>1999-11-15</date>            DIN ISO 8601 als JJJJ-MM-TT
     #<timecode>11:25:33</timecode>
     #<setcount>10</setcount>
@@ -221,7 +236,7 @@ dirPfad = '/home/pi/RaspiCode/'
 dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
-writeMeta(speicherPfad, dirName)
+writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 #setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
