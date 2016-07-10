@@ -52,7 +52,7 @@ class KY040:
 #test
 if __name__ == "__main__":
     
-    CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
+    CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins uebrig?
     DATAPIN = 6
     SWITCHPIN = 13
 

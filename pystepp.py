@@ -158,9 +158,11 @@ def blinkDisplay(state):
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
+    setupDisplay(15,2)
     segment.writeDigit(3, 1, dot=False)
     segment.writeDigit(4, 0, dot=False)
-    
+
+
     #
 
     return
