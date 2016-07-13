@@ -1,1 +1,1 @@
-../Adafruit_I2C/Adafruit_I2C.py
+../Adafruit_I2C.py
