@@ -220,7 +220,7 @@ def writeMeta(pfad, name, setcount):
     l.append('-')
     l.append(datetime.date.month)
     l.append('-')
-    l.append(datetime.date.da)
+    l.append(datetime.date.day)
     timeYear = ''.join(l)
 
     #timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
