@@ -265,7 +265,7 @@ except: #oder im Programm abfragen
 #========================================================================
 
 setDirection('right')
-setupDisplay(15,0)
+#setupDisplay(15,0)
 
 #Variablen
 AnzahlSteps = 0
