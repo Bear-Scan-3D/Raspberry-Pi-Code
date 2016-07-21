@@ -213,7 +213,7 @@ def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
     metafile = open('META-%s.txt' % name, 'w')
     metafile.write('<name>'+ name + '</name>\n')
-    metafile.write('<setcount>'+ setcount + '</setcount>\n')
+    metafile.write('<setcount>'+ str(setcount) + '</setcount>\n')
     #NTP auf dem Raspberry Pi aktiviert?
     timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
     metafile.write('<date>' + str(timeYear) + '</date>\n')
