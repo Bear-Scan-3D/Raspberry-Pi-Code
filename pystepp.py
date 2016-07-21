@@ -5,12 +5,13 @@ import sys
 import RPi.GPIO as gpio
 import time
 import datetime
-from Adafruit_7Segment import SevenSegment
-from Rotary import KY040
-import picamera
+
+from Adafruit_Python_LED_Backpack/Adafruit_LED_Backpack import SevenSegment##NACHGUCKEN!
+
+#from Rotary import KY040
+#import picamera
 import os
 
-#from datetime import datetime, timedelta
 
 #=======================================================================
 #Initialisierungen
@@ -27,14 +28,18 @@ gpio.setup(25, gpio.OUT) #enable pin
 #camera = picamera.PiCamera()
 
 #Display initialisieren
-#segment = SevenSegment(address=0x70)
+display = SevenSegment.SevenSegment()
 
 #Encoder initialisieren
 CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
 DATAPIN = 6
 SWITCHPIN = 13
 
-encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
+#encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
+
+#Maximale Bilder für 123D Catch?
+maxFotos = 72 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
+minFotos = 5 ##Empririsch herausfinden??
 
 #========================================================================
 #Funktionen
@@ -51,9 +56,11 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
         
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
         time.sleep(0.01)#je langsamer desto bessere kontrolle
+        #ist der Drehteller besonders schwer, dann sollte man besonders langsam drehen
     return
     
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
+    #Wenn der Easy Driver ständig an ist verbraucht er sehr viel Strom und wird SEHR warm.
     if motorZustand:
         gpio.output(25, True)
     else:
@@ -61,11 +68,11 @@ def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
     return
 
 def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anzahl der Fotos
-#Steppermotor hat 1.8 Degree per Step
-#Microstepping 1/8 Schritte an 
-#Also 200 volle Steps /1600 Microsteps fuer 360 Grad 
-    #AnzahlSteps = int(1600/AnzahlFotos) #1600 Wegen Microstepping
-    AnzahlSteps = int(2360/AnzahlFotos) #mit getStepsforRevolution herausgefunden
+    #Steppermotor hat 1.8 Degree per Step
+    #Microstepping 1/8 Schritte an (Bessere Kontroller über den Steppermotor)
+    #Also 200 volle Steps /1600 Microsteps fuer 360 Grad
+
+    AnzahlSteps = int(2360/AnzahlFotos) #2360 mit getStepsforRevolution herausgefunden
     return AnzahlSteps
 
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
@@ -74,13 +81,19 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return 
     
-def makeDirectory(dirPfad, dirName):#erstellt ein verzeichnis
+def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis mit Name dirName am Pfad dirPfad
     fullDir = dirPfad + dirName
-    if not os.path.exists(fullDir):
-        os.makedirs(fullDir) 
+    if not os.path.exists(fullDir): #Verzeichnis existiert noch nicht
+        os.makedirs(fullDir)        #Erstellt das Verzeichnis
+    else:
+        while os.path.exists(fullDir):  #Pfand existiert bereits
+            fullDir += '+'              #Hängt ein + an den Pfad an, solange bis der Pfand eindeutig ist
+        print 'Verzeichnis existiert bereits. Fotos werden unter: '+ fullDir + ' gespeichert.'
+        os.makedirs(fullDir)            #Erstelt das Verzeichnis
     return fullDir
     
-def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Umdrehung (Durch Uebersetztung zwischen zwei verschiednene Pulleys bedingt)
+def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Umdrehung
+    # (Durch Uebersetztung zwischen zwei verschiednene Pulleys bedingt)
     Schritter = 0
    
     while raw_input('Schritter starten? (y/n)')=='y':
@@ -91,7 +104,7 @@ def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Um
         print('Schritter: ', Schritter)
     return 
 
-def setupCamera(lighting):#setzt die Parameter der Cam
+def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältnisse)
     print('Kamera wird vorgewärmt')
     time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
@@ -124,48 +137,77 @@ def setupCamera(lighting):#setzt die Parameter der Cam
     
     return
 
-def setupDisplay(helligkeit, blinking):
-    if helligkeit >= 0 and helligkeit <= 15:
-        segment.setBrightness(helligkeit)
+def setupDisplay(helligkeit, blinking): #Bereitet das Display vor. Damit anzeige ordentlich ist.
+    if helligkeit >= 0 and helligkeit <= 15: #Range der möglichen Helligkeit
+        display.setBrightness(helligkeit)
     else:
-        segment.setBrightness(15)
-    if blinking >= 0 and blinking <= 3:
-        segment.setBlinkRate(blinking)
+        display.setBrightness(15)   #Falls ungültige Eingabe
+    if blinking >= 0 and blinking <= 3: #Range der möglichen Blinkzustände
+        display.setBlinkRate(blinking)
         #0 = No Blinking
         #1 = Blink at 2Hz
         #2 = Blink at 1Hz
         #3 = Blink at 1/2 Hz
     else:
-        segment.setBlinkRate(0)
+        display.setBlinkRate(0)
     return
 
-def setDirection(richtung):
+def writeIntToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A-F Nicht hilfreich
+    display.clear()
+    if gettype(zahl) is 'int': ##NACHGUCKEN ================================================================
+        display.print_number_str(zahl)
+    else:
+        zahl = int(zahl)##Macht aus dem wasauchimmer ein int --Sicher ist sicher
+    display.write_display()
+    return
+
+def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist für diese Anwendung irrelevant)
     if str(richtung) == 'left':
         gpio.output(23, True)
     elif str(richtung) == 'right':
         gpio.output(23, False)
     return
 
-def blinkDisplay(state):
-
+def blinkDisplay(state): #Lässt das Display blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
     if state:
         setupDisplay(15,0)
     else:
         gpio.output(25, False)
-
-
     return
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
     setupDisplay(15,2)
-    segment.writeDigit(3, 1, dot=False)
-    segment.writeDigit(4, 0, dot=False)
+    #display.writeDigit(3, 1, dot=False)
+    #display.writeDigit(4, 0, dot=False)
+    currentFotoAnzahl = 10
+    writeIntToDisplay(currentFotoAnzahl)
 
+    #RotaryEncoder Bewegung Abfragen
 
-    #
+    def rotaryChange(direction):
+        print "turned - " + str(direction)
+        rotation = direction
+    def switchPressed():
+        print "button pressed"
+        button = True
 
-    return
+    encoder.start()
+
+    #repeat solange bis der Button gedrückt wird
+    while True:
+        if button is not True:
+            if rotation == 'clockwise':
+                currentFotoAnzahl +=1
+            else:
+                currentFotoAnzahl -=1
+        else:
+            exit()
+        time.sleep(0.1)
+    #Button wurde gedrückt
+    writeIntToDisplay(currentFotoAnzahl)
+
+    return currentFotoAnzahl
 
 def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
@@ -210,9 +252,10 @@ def writeMeta(pfad, name, setcount):
 
 try: #Variablen ins Programm uebergeben
     if sys.argv[1] is None:
-        getAnzahlFoto()
+        getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     else:
-        AnzahlFotos = int(sys.argv[1])
+        AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
+        writeIntToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
@@ -235,7 +278,8 @@ enableMotor(False)
 
 #dirPfad = raw_input('dirPfad: ')
 dirPfad = '/home/pi/RaspiCode/'
-dirName = raw_input('Name des Scans: ')
+#dirName = raw_input('Name des Scans: ')
+dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
