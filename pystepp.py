@@ -211,11 +211,19 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
 
 def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
-    metafile = open('META-%s.txt' % name, 'w')
+    metafile = open('%s/META-%s.txt' % (pfad,name), 'w')
     metafile.write('<name>'+ name + '</name>\n')
     metafile.write('<setcount>'+ str(setcount) + '</setcount>\n')
     #NTP auf dem Raspberry Pi aktiviert?
-    timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
+    l = []
+    l.append(datetime.date.year)
+    l.append('-')
+    l.append(datetime.date.month)
+    l.append('-')
+    l.append(datetime.date.da)
+    timeYear = ''.join(l)
+
+    #timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
     metafile.write('<date>' + str(timeYear) + '</date>\n')
     timeNow = str(datetime.time.hour) + ':' + str(datetime.time.minute) + ':' + str(datetime.time.second)
     metafile.write('<timecode>' + str(timeNow) + '</timecode>\n')
@@ -277,7 +285,7 @@ AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 enableMotor(False)
 
 #dirPfad = raw_input('dirPfad: ')
-dirPfad = '/home/pi/RaspiCode/'
+dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
