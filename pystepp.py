@@ -222,6 +222,9 @@ def writeMeta(pfad, name, setcount):
     timeNow = time.strftime('%H:%M:%S')
     metafile.write('<timecode>' + str(timeNow) + '</timecode>\n')
 
+    timeZone = time.strftime('%Z')
+    metafile.write('<timezone>' + str(timeZone) + '</timezone>\n')
+
     if str(metaChoice) == 'y':
         metaBuffer = raw_input('Beschreibung: ')
         metafile.write('<description>' + str(metaBuffer) + '</description>\n')
