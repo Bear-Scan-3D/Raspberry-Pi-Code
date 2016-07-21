@@ -216,11 +216,11 @@ def writeMeta(pfad, name, setcount):
     metafile.write('<setcount>'+ str(setcount) + '</setcount>\n')
     #NTP auf dem Raspberry Pi aktiviert?
     l = []
-    l.append(datetime.date.year)
+    l.append(str(datetime.date.year))
     l.append('-')
-    l.append(datetime.date.month)
+    l.append(str(datetime.date.month))
     l.append('-')
-    l.append(datetime.date.day)
+    l.append(str(datetime.date.day))
     timeYear = ''.join(l)
 
     #timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
