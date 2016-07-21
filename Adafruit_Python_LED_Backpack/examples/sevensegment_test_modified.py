@@ -9,6 +9,7 @@ display = SevenSegment.SevenSegment()
 display.begin()
 
 # Keep track of the colon being turned on or off.
+print 'Beginne Testprogramm'
 for i in range(10):
     display.clear()
     display.set_colon(True)

@@ -282,7 +282,7 @@ dirPfad = '/home/pi/RaspiCode/'
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
-#writeMeta(speicherPfad, dirName, AnzahlFotos)
+writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera(True)
 enableMotor(True)#Easydriver vor Bewegung anschalten
