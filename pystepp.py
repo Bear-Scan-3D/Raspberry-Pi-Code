@@ -6,10 +6,10 @@ import RPi.GPIO as gpio
 import time
 import datetime
 
-from Adafruit_Python_LED_Backpack/Adafruit_LED_Backpack import SevenSegment##NACHGUCKEN!
+#from Adafruit_Python_LED_Backpack/Adafruit_LED_Backpack import SevenSegment##NACHGUCKEN!
 
 #from Rotary import KY040
-#import picamera
+import picamera
 import os
 
 
@@ -25,15 +25,15 @@ gpio.setup(24, gpio.OUT) #Step
 gpio.setup(25, gpio.OUT) #enable pin
 
 #Kamera initialisieren
-#camera = picamera.PiCamera()
+camera = picamera.PiCamera()
 
 #Display initialisieren
-display = SevenSegment.SevenSegment()
+#display = SevenSegment.SevenSegment()
 
 #Encoder initialisieren
-CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
-DATAPIN = 6
-SWITCHPIN = 13
+#CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
+#DATAPIN = 6
+#SWITCHPIN = 13
 
 #encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
 
@@ -284,7 +284,7 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
-#setupCamera(licht)
+setupCamera(True)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 #getStepsforRevolution()
 while moveCounter < AnzahlFotos:
@@ -292,11 +292,11 @@ while moveCounter < AnzahlFotos:
     print ('Schritt: ', moveCounter)
     moveCounter +=1
     
-    #camera.led = True
+    camera.led = True
     #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
-    #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
-    #camera.led = False
+    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
+    camera.led = False
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
@@ -304,6 +304,6 @@ raw_input('Motor Sleep')#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
-#camera.close()
+camera.close()
 
 #ENDE
