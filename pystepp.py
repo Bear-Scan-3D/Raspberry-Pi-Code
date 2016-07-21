@@ -211,26 +211,26 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
 
 def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
-    metafile = open('META-%s.txt', 'w') % (name)
-    metafile.write('<name>', name, '</name>\n')
-    metafile.write('<setcount>', setcount, '</setcount>\n')
+    metafile = open('META-%s.txt' % name, 'w')
+    metafile.write('<name>'+ name + '</name>\n')
+    metafile.write('<setcount>'+ setcount + '</setcount>\n')
     #NTP auf dem Raspberry Pi aktiviert?
-    timeYear = datetime.date.year + '-' + datetime.date.month + '-' + datetime.date.day
-    metafile.write('<date>', str(timeYear), '</date>\n')
-    timeNow = datetime.time.hour + ':' + datetime.time.minute + ':' + datetime.time.second
-    metafile.write('<timecode>', str(timeNow), '</timecode>\n')
+    timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
+    metafile.write('<date>' + str(timeYear) + '</date>\n')
+    timeNow = str(datetime.time.hour) + ':' + str(datetime.time.minute) + ':' + str(datetime.time.second)
+    metafile.write('<timecode>' + str(timeNow) + '</timecode>\n')
 
     if str(metaChoice) == 'y':
         metaBuffer = raw_input('Beschreibung: ')
-        metafile.write('<description>', str(metaBuffer), '</description>\n')
+        metafile.write('<description>' + str(metaBuffer) + '</description>\n')
         metaBuffer = raw_input('Stichwoerter: (Bsp.: human, russia, awesomeness )')
-        metafile.write('<keywords>', metaBuffer, '</keywords>\n')
+        metafile.write('<keywords>' + metaBuffer + '</keywords>\n')
         metaBuffer = raw_input('Zustand: ')
-        metafile.write('<condition>', metaBuffer, '</condition>\n')
+        metafile.write('<condition>' + metaBuffer + '</condition>\n')
         metaBuffer = raw_input('Copyright: ')
-        metafile.write('<rights>', metaBuffer, '</rights>\n')
+        metafile.write('<rights>' + metaBuffer + '</rights>\n')
         metaBuffer = raw_input('Weitere Kommentare: ')
-        metafile.write('<comment>', metaBuffer, '</comment>\n')
+        metafile.write('<comment>' + metaBuffer + '</comment>\n')
     else:
         print('Keine Metadaten angebene. Automatische Metadaten wurden erfasst.')
 
