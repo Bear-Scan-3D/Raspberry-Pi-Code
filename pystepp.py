@@ -53,12 +53,12 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
         gpio.output(24, True)
         gpio.output(24, False)
         StepCounter += 1
-        
+
         #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
         time.sleep(0.01)#je langsamer desto bessere kontrolle
         #ist der Drehteller besonders schwer, dann sollte man besonders langsam drehen
     return
-    
+
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
     #Wenn der Easy Driver ständig an ist verbraucht er sehr viel Strom und wird SEHR warm.
     if motorZustand:
@@ -79,8 +79,8 @@ def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
     camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(indx)+ '.jpg')
     print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
-    return 
-    
+    return
+
 def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis mit Name dirName am Pfad dirPfad
     fullDir = dirPfad + dirName
     if not os.path.exists(fullDir): #Verzeichnis existiert noch nicht
@@ -91,50 +91,50 @@ def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis mit Name dirName a
         print 'Verzeichnis existiert bereits. Fotos werden unter: '+ fullDir + ' gespeichert.'
         os.makedirs(fullDir)            #Erstelt das Verzeichnis
     return fullDir
-    
+
 def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Umdrehung
     # (Durch Uebersetztung zwischen zwei verschiednene Pulleys bedingt)
     Schritter = 0
-   
+
     while raw_input('Schritter starten? (y/n)')=='y':
         Stepper = raw_input('Wieviele Schritte?')
         bauffer = int(Stepper)
         moveStepper(bauffer)
         Schritter +=bauffer
         print('Schritter: ', Schritter)
-    return 
+    return
 
 def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältnisse)
     print('Kamera wird vorgewärmt')
     time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
-    
+
     overExposerValue = 1000
-    
+
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
-    
+
     camera.sharpness = 0
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
-    
+
     if lighting:#Gute Lichtverhaeltnisse
-        camera.iso = 200 
-        
+        camera.iso = 200
+
         bufferAll = camera.exposure_speed
         bufferAll = int(bufferAll) + overExposerValue
         camera.shutter_speed = int(bufferAll)
-        
-        
+
+
     else:#schlechte lichverhaeltnisse
         camera.iso = 800
         camera.shutter_speed = 2000000 #2Sekunden verschlusszeit
-        
+
     camera.exposure_mode = 'off'
     whiteBalanceBuffer = camera.awb_gains
     camera.awb_mode = 'off'
     camera.awb_gains = whiteBalanceBuffer
-    
+
     return
 
 def setupDisplay(helligkeit, blinking): #Bereitet das Display vor. Damit anzeige ordentlich ist.
@@ -215,14 +215,14 @@ def writeMeta(pfad, name, setcount):
     metafile.write('<name>'+ name + '</name>\n')
     metafile.write('<setcount>'+ str(setcount) + '</setcount>\n')
     #NTP auf dem Raspberry Pi aktiviert?
-    l = []
-    l.append(str(datetime.date.year))
-    l.append('-')
-    l.append(str(datetime.date.month))
-    l.append('-')
-    l.append(str(datetime.date.day))
-    timeYear = ''.join(l)
-
+    #l = []
+    #l.append(datetime.date.year)
+    #l.append('-')
+    #l.append(str(datetime.date.month))
+    #l.append('-')
+    #l.append(str(datetime.date.day))
+    #timeYear = ''.join(l)
+    timeYear = time.strftime('%Y-%m-%d')
     #timeYear = str(datetime.date.year) + '-' + str(datetime.date.month) + '-' + str(datetime.date.day)
     metafile.write('<date>' + str(timeYear) + '</date>\n')
     timeNow = str(datetime.time.hour) + ':' + str(datetime.time.minute) + ':' + str(datetime.time.second)
@@ -267,7 +267,7 @@ try: #Variablen ins Programm uebergeben
 except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
-    
+
 #========================================================================
 #MAIN
 #========================================================================
@@ -299,7 +299,7 @@ while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
     moveCounter +=1
-    
+
     camera.led = True
     #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
