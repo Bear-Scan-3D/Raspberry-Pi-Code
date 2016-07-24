@@ -4,9 +4,9 @@
 import sys
 import RPi.GPIO as gpio
 import time
-import datetime
+#import datetime
 
-#from Adafruit_Python_LED_Backpack/Adafruit_LED_Backpack import SevenSegment##NACHGUCKEN!
+from Adafruit_LED_Backpack import SevenSegment ##NACHGUCKEN!
 
 #from Rotary import KY040
 import picamera
@@ -28,7 +28,7 @@ gpio.setup(25, gpio.OUT) #enable pin
 camera = picamera.PiCamera()
 
 #Display initialisieren
-#display = SevenSegment.SevenSegment()
+display = SevenSegment.SevenSegment()
 
 #Encoder initialisieren
 #CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
@@ -78,7 +78,7 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
     camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(indx)+ '.jpg')
-    print('Foto '+ str(indx)+ 'aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
+    print('Foto '+ str(indx)+ ' aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return
 
 def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis mit Name dirName am Pfad dirPfad
