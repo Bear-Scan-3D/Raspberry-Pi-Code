@@ -6,7 +6,7 @@ import RPi.GPIO as gpio
 import time
 #import datetime
 
-from Adafruit_LED_Backpack import SevenSegment ##NACHGUCKEN!
+from Adafruit_LED_Backpack import SevenSegment
 
 #from Rotary import KY040
 import picamera
@@ -31,9 +31,9 @@ camera = picamera.PiCamera()
 display = SevenSegment.SevenSegment()
 
 #Encoder initialisieren
-#CLOCKPIN = 5 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
-#DATAPIN = 6
-#SWITCHPIN = 13
+#CLOCKPIN = 22 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
+#DATAPIN = 27
+#SWITCHPIN = 4
 
 #encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
 
@@ -137,27 +137,19 @@ def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältn
 
     return
 
-def setupDisplay(helligkeit, blinking): #Bereitet das Display vor. Damit anzeige ordentlich ist.
+def setupDisplay(helligkeit, colon): #Bereitet das Display vor. Damit anzeige ordentlich ist.
+    display.set_colon(colon) #True oder False -- setzt den Dezimalpunkt
+
     if helligkeit >= 0 and helligkeit <= 15: #Range der möglichen Helligkeit
         display.setBrightness(helligkeit)
     else:
         display.setBrightness(15)   #Falls ungültige Eingabe
-    if blinking >= 0 and blinking <= 3: #Range der möglichen Blinkzustände
-        display.setBlinkRate(blinking)
-        #0 = No Blinking
-        #1 = Blink at 2Hz
-        #2 = Blink at 1Hz
-        #3 = Blink at 1/2 Hz
-    else:
-        display.setBlinkRate(0)
     return
 
-def writeIntToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A-F Nicht hilfreich
+def writeToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A-F Nicht hilfreich
     display.clear()
-    if gettype(zahl) is 'int': ##NACHGUCKEN ================================================================
-        display.print_number_str(zahl)
-    else:
-        zahl = int(zahl)##Macht aus dem wasauchimmer ein int --Sicher ist sicher
+    zahl = str(zahl) #um sicher zu stellen, dass Zahl ein string ist
+    display.print_number_str(zahl)
     display.write_display()
     return
 
@@ -168,20 +160,28 @@ def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist f�
         gpio.output(23, False)
     return
 
-def blinkDisplay(state): #Lässt das Display blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
-    if state:
-        setupDisplay(15,0)
-    else:
-        gpio.output(25, False)
+def blinkDisplay(speed): #Lässt das Display blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
+    timing = 0
+    if speed == 'slow':
+        timing = 0.5
+    elif speed == 'medium':
+        timing = 0.2
+    elif speed == 'fast':
+        timing = 0.1
+
+    while timing != 0:
+        display.set_brightness(1)
+        time.sleep(timing)
+        display.set_brightness(15)
+        time.sleep(timing)
+        #überorüfen ob der button gedrückt wurde. Falls ja dann exit. Globale variable?
+
     return
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
-    setupDisplay(15,2)
-    #display.writeDigit(3, 1, dot=False)
-    #display.writeDigit(4, 0, dot=False)
     currentFotoAnzahl = 10
-    writeIntToDisplay(currentFotoAnzahl)
+    writeToDisplay(currentFotoAnzahl)
 
     #RotaryEncoder Bewegung Abfragen
 
@@ -260,7 +260,7 @@ try: #Variablen ins Programm uebergeben
         getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     else:
         AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
-        writeIntToDisplay(AnzahlFotos) #schreibt das ins Display
+        writeToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
@@ -270,7 +270,7 @@ except: #oder im Programm abfragen
 #========================================================================
 
 setDirection('right')
-#setupDisplay(15,0)
+setupDisplay(15,False)
 
 #Variablen
 AnzahlSteps = 0
@@ -291,7 +291,9 @@ writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera(True)
 enableMotor(True)#Easydriver vor Bewegung anschalten
+
 #getStepsforRevolution()
+
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
