@@ -19,9 +19,9 @@ while True:
     # Clear the display buffer.
     display.clear()
     # Print a floating point number to the display.
-    display.print_number_str(number)
+    #display.print_number_str(number)
     number += 1
-    display.write_display()
+    #display.write_display()
     # Delay for a second.
     time.sleep(1.0)
 
