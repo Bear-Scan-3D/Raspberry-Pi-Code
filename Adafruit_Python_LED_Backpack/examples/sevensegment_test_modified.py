@@ -27,11 +27,14 @@ while True:
 
     display.print_float(0.10)
     display.set_colon(False)
+    display.set_brightness(8)
     display.write_display()
+
     time.sleep(1.0)
 
-    display.print_float(10)
+    display.print_number_str('1234')
     display.set_colon(False)
+    display.set_brightness(15)
     display.write_display()
     time.sleep(1.0)
 
