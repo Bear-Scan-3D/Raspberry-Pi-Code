@@ -38,5 +38,12 @@ while True:
     display.write_display()
     time.sleep(1.0)
 
+    display.setBlinkRate(HT16K33_BLINK_1HZ)
+    time.sleep(5.0)
+
+    display.setBlinkRate(1)
+    time.sleep(5.0)
+
+
     #display.set_invert(False)
     # Make sure to call write_display() to make the above visible!
