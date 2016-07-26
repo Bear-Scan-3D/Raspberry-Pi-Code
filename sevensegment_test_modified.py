@@ -32,7 +32,7 @@ while True:
 
     time.sleep(1.0)
 
-    display.print_number_str('1234')
+    display.print_number_str('A234')
     display.set_colon(False)
     display.set_brightness(15)
     display.write_display()
@@ -41,8 +41,10 @@ while True:
     while i < 10:
 
         display.set_brightness(15)
-        time.sleep(0.2)
+        display.write_display()
+        time.sleep(1.0)
         display.set_brightness(1)
+        display.write_display()
         i +=1
 
 
