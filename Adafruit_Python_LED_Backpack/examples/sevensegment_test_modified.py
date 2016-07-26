@@ -10,14 +10,6 @@ display.begin()
 
 # Keep track of the colon being turned on or off.
 print 'Beginne Testprogramm'
-for i in range(10):
-    display.clear()
-    display.set_colon(True)
-    display.write_display()
-    time.sleep(1)
-    display.set_colon(False)
-    display.write_display()
-    time.sleep(1)
 
 # Run through different number printing examples.
 print('Press Ctrl-C to quit.')
@@ -32,6 +24,12 @@ while True:
     display.write_display()
     # Delay for a second.
     time.sleep(1.0)
+
+    display.print_float(0.10)
+    display.set_colon(True)
+    display.write_display()
+    time.sleep(1.0)
+
 
     display.set_invert(False)
     # Make sure to call write_display() to make the above visible!
