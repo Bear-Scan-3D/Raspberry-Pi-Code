@@ -26,10 +26,14 @@ while True:
     time.sleep(1.0)
 
     display.print_float(0.10)
-    display.set_colon(True)
+    display.set_colon(False)
     display.write_display()
     time.sleep(1.0)
 
+    display.print_float(10)
+    display.set_colon(False)
+    display.write_display()
+    time.sleep(1.0)
 
-    display.set_invert(False)
+    #display.set_invert(False)
     # Make sure to call write_display() to make the above visible!
