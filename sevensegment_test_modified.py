@@ -37,7 +37,7 @@ while True:
     display.set_brightness(15)
     display.write_display()
     time.sleep(1.0)
-
+    i = 0
     while i < 10:
 
         display.set_brightness(15)
