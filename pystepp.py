@@ -308,11 +308,12 @@ while moveCounter < AnzahlFotos:
     moveCounter +=1
     writeToDisplay(AnzahlFotos-moveCounter)
     camera.led = True
-    camera.start_preview(alpha=128, fullscreen=True)
+    camera.start_preview(alpha=128, fullscreen=False)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
 
+display.set_blink(HT16K33_BLINK_1HZ)
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
 raw_input('Motor Sleep')#wait for any key
@@ -320,5 +321,6 @@ raw_input('Motor Sleep')#wait for any key
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
 camera.close()
+display.clear()
 
 #ENDE
