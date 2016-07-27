@@ -138,6 +138,8 @@ def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältn
     return
 
 def setupDisplay(helligkeit, colon): #Bereitet das Display vor. Damit anzeige ordentlich ist.
+    display.begin()
+
     display.set_colon(colon) #True oder False -- setzt den Dezimalpunkt
 
     if helligkeit >= 0 and helligkeit <= 15: #Range der möglichen Helligkeit
@@ -151,6 +153,7 @@ def writeToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A
     zahl = str(zahl) #um sicher zu stellen, dass Zahl ein string ist
     display.print_number_str(zahl)
     display.write_display()
+    time.sleep(0.5)
     return
 
 def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist für diese Anwendung irrelevant)
