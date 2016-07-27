@@ -114,11 +114,11 @@ def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältn
     time.sleep(2)
     print('Kamera fertig. Einstellungen werden gespeichert')
 
-    overExposerValue = 1000
+    overExposerValue = 10000
 
     camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
 
-    camera.sharpness = 0
+    camera.sharpness = 1
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
