@@ -313,7 +313,6 @@ while moveCounter < AnzahlFotos:
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
 
-display.set_blink(HT16K33_BLINK_1HZ)
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
 raw_input('Motor Sleep')#wait for any key
