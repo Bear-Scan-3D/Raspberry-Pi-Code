@@ -141,9 +141,9 @@ def setupDisplay(helligkeit, colon): #Bereitet das Display vor. Damit anzeige or
     display.set_colon(colon) #True oder False -- setzt den Dezimalpunkt
 
     if helligkeit >= 0 and helligkeit <= 15: #Range der möglichen Helligkeit
-        display.setBrightness(helligkeit)
+        display.set_brightness(helligkeit)
     else:
-        display.setBrightness(15)   #Falls ungültige Eingabe
+        display.set_brightness(15)   #Falls ungültige Eingabe
     return
 
 def writeToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A-F Nicht hilfreich
