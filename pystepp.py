@@ -77,7 +77,10 @@ def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anza
 
 def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
     print('index: ', indx, 'FotoPfad: ', fotoPfad)
-    camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(indx)+ '.jpg')
+    strindx = indx
+    if indx <= 9:
+        strindx = 0 + str(indx)
+    camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(strindx)+ '.jpg')
     print('Foto '+ str(indx)+ ' aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
     return
 
@@ -301,9 +304,9 @@ while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
     moveCounter +=1
-
+    writeToDisplay(AnzahlFotos-moveCounter)
     camera.led = True
-    #camera.start_preview(alpha=128, fullscreen=True)
+    camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
