@@ -8,7 +8,8 @@ import time
 
 from Adafruit_LED_Backpack import SevenSegment
 
-#from Rotary import KY040
+from Rotary import KY040
+
 import picamera
 import os
 
@@ -30,12 +31,10 @@ camera = picamera.PiCamera()
 #Display initialisieren
 display = SevenSegment.SevenSegment()
 
-#Encoder initialisieren
-#CLOCKPIN = 22 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
-#DATAPIN = 27
-#SWITCHPIN = 4
-
-#encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
+#Encoderpins
+CLOCKPIN = 22 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
+DATAPIN = 27
+SWITCHPIN = 4
 
 #Maximale Bilder für 123D Catch?
 maxFotos = 72 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
@@ -58,6 +57,15 @@ def moveStepper(steps):#bewegt den Motor x(steps) Schritte
         time.sleep(0.01)#je langsamer desto bessere kontrolle
         #ist der Drehteller besonders schwer, dann sollte man besonders langsam drehen
     return
+
+def checkForButton(): #UserInput durch den Button des Rotary Encoders
+    print('Bitte Eingabe bestaetigen. (Button druecken)')
+
+    while gpio.input(4) != 0:
+        blinkDisplay('medium')
+
+    print('Button Pressed')
+    return True
 
 def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
     #Wenn der Easy Driver ständig an ist verbraucht er sehr viel Strom und wird SEHR warm.
@@ -170,7 +178,7 @@ def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist f�
         gpio.output(23, False)
     return
 
-def blinkDisplay(speed): #Lässt das Display blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
+def blinkDisplay(speed): #Lässt das Display ein mal blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
     timing = 0
     if speed == 'slow':
         timing = 0.5
@@ -179,13 +187,11 @@ def blinkDisplay(speed): #Lässt das Display blinken. Vielleicht Hilfreich wenn 
     elif speed == 'fast':
         timing = 0.1
 
-    while timing != 0:
+    if timing != 0:
         display.set_brightness(1)
         time.sleep(timing)
         display.set_brightness(15)
         time.sleep(timing)
-        #überorüfen ob der button gedrückt wurde. Falls ja dann exit. Globale variable?
-
     return
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
@@ -194,18 +200,23 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     writeToDisplay(currentFotoAnzahl)
 
     #RotaryEncoder Bewegung Abfragen
+    userRotate = False
 
     def rotaryChange(direction):
+        userRotate = True
         print "turned - " + str(direction)
         rotation = direction
     def switchPressed():
         print "button pressed"
         button = True
 
+    encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
+
     encoder.start()
 
     #repeat solange bis der Button gedrückt wird
-    while True:
+
+    while userRotate != True:
         if button is not True:
             if rotation == 'clockwise':
                 currentFotoAnzahl +=1
@@ -215,7 +226,7 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
             exit()
         time.sleep(0.1)
     #Button wurde gedrückt
-    writeIntToDisplay(currentFotoAnzahl)
+    writeToDisplay(currentFotoAnzahl)
 
     return currentFotoAnzahl
 
@@ -267,7 +278,7 @@ def writeMeta(pfad, name, setcount):
 
 try: #Variablen ins Programm uebergeben
     if sys.argv[1] is None:
-        getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
+        AnzahlFotos = getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     else:
         AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
         writeToDisplay(AnzahlFotos) #schreibt das ins Display
@@ -285,7 +296,7 @@ setupDisplay(15,False)
 #Variablen
 AnzahlSteps = 0
 moveCounter = 0
-licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft
+licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft?
 
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 
@@ -299,25 +310,27 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
-setupCamera(True)
+setupCamera(licht)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
-#getStepsforRevolution()
+#getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
 
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     print ('Schritt: ', moveCounter)
-    moveCounter +=1
-    writeToDisplay(AnzahlFotos-moveCounter)
+    moveCounter += 1
+    writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
+
     camera.led = True
-    camera.start_preview(alpha=128, fullscreen=False)
+    #camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
-raw_input('Motor Sleep')#wait for any key
+checkForButton()
+#raw_input('Motor Sleep')#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
