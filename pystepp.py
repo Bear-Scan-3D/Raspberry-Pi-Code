@@ -8,7 +8,8 @@ import time
 
 from Adafruit_LED_Backpack import SevenSegment
 
-from Rotary import KY040
+import gaugette.rotary_encoder
+import gaugette.switch
 
 import picamera
 import os
@@ -31,10 +32,16 @@ camera = picamera.PiCamera()
 #Display initialisieren
 display = SevenSegment.SevenSegment()
 
-#Encoderpins
-CLOCKPIN = 22 #stimmt wahrscheinlich nicht? Habe ich noch genug GPIO pins übrig?
-DATAPIN = 27
-SWITCHPIN = 4
+#encoder Pins
+#wiringPI Pins
+A_PIN = 2 # = 22
+B_PIN = 3 # = 27
+SW_PIN = 7 # = 4
+
+encoder = gaugette.rotary_encoder.RotaryEncoder(A_PIN, B_PIN)
+switch = gaugette.switch.Switch(SW_PIN)
+encoder.steps_per_cycle = 4 # Je nach Hardware unterschiedlich
+last_state = None
 
 #Maximale Bilder für 123D Catch?
 maxFotos = 72 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
@@ -196,37 +203,29 @@ def blinkDisplay(speed): #Lässt das Display ein mal blinken. Vielleicht Hilfrei
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
-    currentFotoAnzahl = 10
+    currentFotoAnzahl = 20
     writeToDisplay(currentFotoAnzahl)
 
     #RotaryEncoder Bewegung Abfragen
-    userRotate = False
 
-    def rotaryChange(direction):
-        userRotate = True
-        print "turned - " + str(direction)
-        rotation = direction
-    def switchPressed():
-        print "button pressed"
-        button = True
+    while True:
+        delta = encoder.get_cycles()
+        if delta != 0:
+            currentFotoAnzahl = currentFotoAnzahl + delta
+            writeToDisplay(currentFotoAnzahl)
+            print "rotate %d" % delta
+            print ('currentFotoAnzahl: ', currentFotoAnzahl)
+        sw_state = switch.get_state()
+        if sw_state != last_state:
+            print "switch %d" % sw_state
+            last_state = sw_state
+            exit()
 
-    encoder = KY040(CLOCKPIN, DATAPIN, SWITCHPIN, rotaryChange, switchPressed)
-
-    encoder.start()
 
     #repeat solange bis der Button gedrückt wird
-
-    while userRotate != True:
-        if button is not True:
-            if rotation == 'clockwise':
-                currentFotoAnzahl +=1
-            else:
-                currentFotoAnzahl -=1
-        else:
-            exit()
         time.sleep(0.1)
     #Button wurde gedrückt
-    writeToDisplay(currentFotoAnzahl)
+    #writeToDisplay(currentFotoAnzahl)
 
     return currentFotoAnzahl
 
