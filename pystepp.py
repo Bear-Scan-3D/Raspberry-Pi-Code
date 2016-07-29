@@ -38,7 +38,7 @@ A_PIN = 2 # = 22
 B_PIN = 3 # = 27
 SW_PIN = 7 # = 4
 
-encoder = gaugette.rotary_encoder.RotaryEncoder(A_PIN, B_PIN)
+encoder = gaugette.rotary_encoder.RotaryEncoder.Worker(A_PIN, B_PIN)
 switch = gaugette.switch.Switch(SW_PIN)
 encoder.steps_per_cycle = 4 # Je nach Hardware unterschiedlich
 
@@ -208,6 +208,8 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     writeToDisplay(currentFotoAnzahl)
     last_state = None
 
+    encoder.start()
+
     #RotaryEncoder Bewegung Abfragen
 
     while True:
@@ -216,7 +218,7 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
             currentFotoAnzahl = currentFotoAnzahl + delta
             writeToDisplay(currentFotoAnzahl)
             print "rotate %d" % delta
-            print ('currentFotoAnzahl: ', currentFotoAnzahl)
+            #print ('currentFotoAnzahl: ', currentFotoAnzahl)
         sw_state = switch.get_state()
         if sw_state != last_state:
             print "switch %d" % sw_state
