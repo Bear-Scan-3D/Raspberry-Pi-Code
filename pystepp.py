@@ -217,7 +217,7 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
             writeToDisplay(currentFotoAnzahl)
             print "rotate %d" % delta
             #print ('currentFotoAnzahl: ', currentFotoAnzahl)
-            wait(0.001)
+            time.sleep(0.001)
         sw_state = switch.get_state()
         if sw_state != last_state:
             print "switch %d" % sw_state
