@@ -175,7 +175,7 @@ def writeToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A
     zahl = str(zahl) #um sicher zu stellen, dass Zahl ein string ist
     display.print_number_str(zahl)
     display.write_display()
-    time.sleep(0.5)
+    #time.sleep(0.5)
     return
 
 def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist für diese Anwendung irrelevant)
