@@ -214,7 +214,7 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
         delta = encoder.get_cycles()
         if delta != 0:
             print "rotate %d" % delta
-            if (currentFotoAnzahl > minFotos) and (currentFotoAnzahl < maxFotos):
+            if (currentFotoAnzahl >= minFotos) and (currentFotoAnzahl <= maxFotos):
                 currentFotoAnzahl = currentFotoAnzahl - delta
 
             writeToDisplay(currentFotoAnzahl)
