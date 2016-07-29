@@ -279,6 +279,7 @@ def writeMeta(pfad, name, setcount):
 
 try: #Variablen ins Programm uebergeben
     if sys.argv[1] is None:
+        print('HEY1')
         AnzahlFotos = 10
         AnzahlFotos = getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     else:
@@ -291,12 +292,12 @@ except: #oder im Programm abfragen
 #========================================================================
 #MAIN
 #========================================================================
-
+print('HEY2')
 setDirection('right')
 setupDisplay(15,False)
 
 #Variablen
-AnzahlSteps = 0
+#AnzahlSteps = 0
 moveCounter = 0
 licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft?
 
