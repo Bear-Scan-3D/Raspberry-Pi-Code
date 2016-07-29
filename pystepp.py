@@ -213,15 +213,17 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     while True:
         delta = encoder.get_cycles()
         if delta != 0:
+            print "rotate %d" % delta
+
             currentFotoAnzahl = currentFotoAnzahl + delta
             writeToDisplay(currentFotoAnzahl)
-            print "rotate %d" % delta
-            #print ('currentFotoAnzahl: ', currentFotoAnzahl)
-            time.sleep(0.001)
+
+            #time.sleep(0.001)
         sw_state = switch.get_state()
         if sw_state != last_state:
             print "switch %d" % sw_state
             last_state = sw_state
+
             if sw_state == 1:
                 return currentFotoAnzahl
 
@@ -276,7 +278,6 @@ try: #Variablen ins Programm uebergeben
         AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
         writeToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
-    print('HEY1')
     AnzahlFotos = getAnzahlFoto()  # Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
@@ -284,7 +285,6 @@ except: #oder im Programm abfragen
 #========================================================================
 #MAIN
 #========================================================================
-print('HEY2')
 setDirection('right')
 setupDisplay(15,False)
 
