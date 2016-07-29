@@ -1,7 +1,7 @@
 import gaugette.rotary_encoder
 import gaugette.switch
 
-GPIO.setmode(GPIO.BCM)
+#GPIO.setmode(GPIO.BCM)
 
 A_PIN = 22
 B_PIN = 27
