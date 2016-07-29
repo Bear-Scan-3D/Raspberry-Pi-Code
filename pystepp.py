@@ -45,7 +45,7 @@ encoder.steps_per_cycle = 4 # Je nach Hardware unterschiedlich
 
 
 #Maximale Bilder für 123D Catch?
-maxFotos = 72 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
+maxFotos = 150 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
 minFotos = 5 ##Empririsch herausfinden??
 
 #========================================================================
@@ -214,7 +214,6 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     while True:
         delta = encoder.get_cycles()
 
-
         if delta != 0:
             print "rotate %d" % delta
             currentFotoAnzahl = currentFotoAnzahl - delta
@@ -225,8 +224,6 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
                 currentFotoAnzahl = maxFotos
 
             writeToDisplay(currentFotoAnzahl)
-        else:
-            blinkDisplay('slow')
 
         sw_state = switch.get_state()
         if sw_state != last_state:
@@ -311,7 +308,7 @@ dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
-print('Ganzer Pfad: ', speicherPfad)
+#print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera(licht)
@@ -326,7 +323,7 @@ while moveCounter < AnzahlFotos:
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
     camera.led = True
-    #camera.start_preview(alpha=128, fullscreen=True)
+    camera.start_preview(alpha=128, fullscreen=True)
     time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     camera.led = False
