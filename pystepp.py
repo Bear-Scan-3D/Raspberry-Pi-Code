@@ -276,9 +276,8 @@ def writeMeta(pfad, name, setcount):
 #========================================================================
 #Parameter vom User erfragen
 #========================================================================
-
+print('sys: ', sys.argv[1])
 try: #Variablen ins Programm uebergeben
-    print('sys: ', sys.argv[1])
     if sys.argv[1] == None:
         print('HEY1')
         AnzahlFotos = 10
