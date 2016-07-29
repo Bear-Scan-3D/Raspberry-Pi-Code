@@ -208,8 +208,6 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
     writeToDisplay(currentFotoAnzahl)
     last_state = None
 
-    encoder.start()
-
     #RotaryEncoder Bewegung Abfragen
 
     while True:
