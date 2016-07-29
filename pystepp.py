@@ -41,7 +41,7 @@ SW_PIN = 7 # = 4
 encoder = gaugette.rotary_encoder.RotaryEncoder(A_PIN, B_PIN)
 switch = gaugette.switch.Switch(SW_PIN)
 encoder.steps_per_cycle = 4 # Je nach Hardware unterschiedlich
-last_state = None
+
 
 #Maximale Bilder für 123D Catch?
 maxFotos = 72 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
@@ -203,8 +203,10 @@ def blinkDisplay(speed): #Lässt das Display ein mal blinken. Vielleicht Hilfrei
 
 def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
     #schreibe einen Beispielwert ins Display(10)
+    print('in getAnzahlFotos')
     currentFotoAnzahl = 20
     writeToDisplay(currentFotoAnzahl)
+    last_state = None
 
     #RotaryEncoder Bewegung Abfragen
 
