@@ -221,15 +221,9 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
         if sw_state != last_state:
             print "switch %d" % sw_state
             last_state = sw_state
-            exit()
+            if sw_state == 1:
+                return currentFotoAnzahl
 
-
-    #repeat solange bis der Button gedrückt wird
-        time.sleep(0.1)
-    #Button wurde gedrückt
-    #writeToDisplay(currentFotoAnzahl)
-
-    return currentFotoAnzahl
 
 def writeMeta(pfad, name, setcount):
     metaChoice = raw_input('Wollen sie Metadaten angeben? (y/n)')
