@@ -9,7 +9,7 @@ SW_PIN = 7 # = 4
 
 encoder = gaugette.rotary_encoder.RotaryEncoder(A_PIN, B_PIN)
 switch = gaugette.switch.Switch(SW_PIN)
-encoder.steps_per_cycle = 1
+encoder.steps_per_cycle = 4
 
 last_state = None
 
