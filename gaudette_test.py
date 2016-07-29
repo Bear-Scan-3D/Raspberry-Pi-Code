@@ -1,9 +1,11 @@
 import gaugette.rotary_encoder
 import gaugette.switch
 
-A_PIN = 7
-B_PIN = 9
-SW_PIN = 8
+GPIO.setmode(GPIO.BCM)
+
+A_PIN = 22
+B_PIN = 27
+SW_PIN = 4
 
 encoder = gaugette.rotary_encoder.RotaryEncoder.Worker(A_PIN, B_PIN)
 encoder.start()
