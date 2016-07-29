@@ -213,8 +213,7 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
 
     while True:
         delta = encoder.get_cycles()
-        if delta == 0:
-            blinkDisplay('slow')
+
 
         if delta != 0:
             print "rotate %d" % delta
@@ -226,6 +225,8 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
                 currentFotoAnzahl = maxFotos
 
             writeToDisplay(currentFotoAnzahl)
+        else:
+            blinkDisplay('slow')
 
         sw_state = switch.get_state()
         if sw_state != last_state:
