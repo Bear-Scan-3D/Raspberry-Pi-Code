@@ -276,16 +276,13 @@ def writeMeta(pfad, name, setcount):
 #========================================================================
 #Parameter vom User erfragen
 #========================================================================
-print('sys: ', sys.argv[1])
+
 try: #Variablen ins Programm uebergeben
-    if sys.argv[1] == None:
-        print('HEY1')
-        AnzahlFotos = 10
-        AnzahlFotos = getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
-    else:
         AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
         writeToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
+    print('HEY1')
+    AnzahlFotos = getAnzahlFoto()  # Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
 
