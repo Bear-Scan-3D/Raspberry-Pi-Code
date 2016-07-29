@@ -213,6 +213,9 @@ def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des D
 
     while True:
         delta = encoder.get_cycles()
+        while delta == 0:
+            blinkDisplay('slow')
+
         if delta != 0:
             print "rotate %d" % delta
             currentFotoAnzahl = currentFotoAnzahl - delta
