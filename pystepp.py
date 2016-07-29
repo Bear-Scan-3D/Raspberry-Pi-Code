@@ -278,7 +278,8 @@ def writeMeta(pfad, name, setcount):
 #========================================================================
 
 try: #Variablen ins Programm uebergeben
-    if sys.argv[1] is None:
+    print('sys: ', sys.argv[1])
+    if sys.argv[1] == None:
         print('HEY1')
         AnzahlFotos = 10
         AnzahlFotos = getAnzahlFoto() #Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
