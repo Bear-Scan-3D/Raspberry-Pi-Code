@@ -1,122 +1,152 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
+import sys #to ba able to create files etc
 import RPi.GPIO as gpio
 import time
-#import datetime
 
-from Adafruit_LED_Backpack import SevenSegment
+from Adafruit_LED_Backpack import SevenSegment #library for the small Display
 
+#library for using the rotary encoder (also with the button of same)
 import gaugette.rotary_encoder
 import gaugette.switch
 
-import picamera
+import picamera #for use with the RaspiCam
 import os
 
 
 #=======================================================================
-#Initialisierungen
+#Init
 #=======================================================================
 
-#GPIO Vorbereitung
+#setting up all the GPIO Pins so that they can be manipulated later
 gpio.setmode(gpio.BCM)
 
+#GPIO for control of steppermotor
 gpio.setup(23, gpio.OUT) #Dir
 gpio.setup(24, gpio.OUT) #Step
 gpio.setup(25, gpio.OUT) #enable pin
-gpio.setup(4, gpio.OUT)
+gpio.setup(4, gpio.OUT) #Sleep? ##NACHGUCKEN==============================================================
 
-#Kamera initialisieren
+#make instance of camera
 camera = picamera.PiCamera()
 
-#Display initialisieren
+#make instance of display
 display = SevenSegment.SevenSegment()
 
-#encoder Pins
-#wiringPI Pins
-A_PIN = 2 # = 22
+#GPIO for usage with the rotary encoder (NOT BCM but wiringPI pin layout)
+A_PIN = 2 # = 22 (BCM)
 B_PIN = 3 # = 27
 SW_PIN = 7 # = 4
 
+#Make instance of the rotary encoder/switch
 encoder = gaugette.rotary_encoder.RotaryEncoder(A_PIN, B_PIN)
 switch = gaugette.switch.Switch(SW_PIN)
-encoder.steps_per_cycle = 4 # Je nach Hardware unterschiedlich
+encoder.steps_per_cycle = 4 #adjust the triggering amount of steps for the rotarty encoder (completely depens on hardware)
 
 
-#Maximale Bilder für 123D Catch?
-maxFotos = 150 ##Ist das bei der API auch so? Memento hat kein limit? Trotzdem ein Limit einstellen wegen datenübertragung?
-minFotos = 5 ##Empririsch herausfinden??
+#setting up a range for the amount of pictures for each scan
+maxFotos = 150 #The more the better? Whats the limit? When doesn't it matter anymore?
+minFotos = 5 #Probably should be at least arround 10 for good results
 
 #========================================================================
-#Funktionen
+#Methods
 #========================================================================
 
-def moveStepper(steps):#bewegt den Motor x(steps) Schritte
-    #Schrittzaehler initialisieren
+def moveStepper(steps):#moves the motor a certain amount ('steps')
     StepCounter = 0
-    while StepCounter<steps:
-        #einmaliger Wechsel zwischen an und aus = Easydriver macht einen (Mirco-)Step
+    while StepCounter < steps:
+        #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
+        #Every 'pulse' the stepperdriver makes one microstep
         gpio.output(24, True)
         gpio.output(24, False)
         StepCounter += 1
 
-        #wartezeit Bestimmt die Geschwindigkeit des Steppermotors
-        time.sleep(0.01)#je langsamer desto bessere kontrolle
-        #ist der Drehteller besonders schwer, dann sollte man besonders langsam drehen
+        time.sleep(0.01)#the speed of the steppermotor is controlled by a waiting time between ever microstep
+        #if the turntable/objects is very heavy the speed should be especially slow
     return
 
-def checkForButton(): #UserInput durch den Button des Rotary Encoders
-    print('Bitte Eingabe bestaetigen. (Button druecken)')
+def checkForButton(): #waits for user to press the button of the rotary encoder
+    print('Please press the button of the knob.')
 
     while gpio.input(4) != 0:
         blinkDisplay('medium')
 
-    print('Button Pressed')
     return True
 
-def enableMotor(motorZustand):#schaltet den Easy Driver an und aus
-    #Wenn der Easy Driver ständig an ist verbraucht er sehr viel Strom und wird SEHR warm.
+def enableMotor(motorZustand): #toogle the sleep mode of the steppermotordriver
+    #If the driver is always on it uses a lot of energy which is displaced as a lot of heat
+
     if motorZustand:
         gpio.output(25, True)
     else:
         gpio.output(25, False)
     return
 
-def AnzahlFotosToSteps(AnzahlFotos):#Berechnung der Anzahl der Schritte aus Anzahl der Fotos
-    #Steppermotor hat 1.8 Degree per Step
-    #Microstepping 1/8 Schritte an (Bessere Kontroller über den Steppermotor)
-    #Also 200 volle Steps /1600 Microsteps fuer 360 Grad
+def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the given amount of pictures
+    #stepperdriver is configured for 1/8 step microstepping
+    #steppermotor needs 200 full steps(or 1600 microsteps) for a full 360 degree revolution
+    #!IMPORTANT!
+    #only works if the turntable and the steppermotor is coupled with a 1:1 gearing ration
+    #for every other ration please use getStepsforRevolution() method
 
-    AnzahlSteps = int(2360/AnzahlFotos) #2360 mit getStepsforRevolution herausgefunden
+    AnzahlSteps = int(2360/AnzahlFotos) #2360 from getStepsforRevolution() method
     return AnzahlSteps
 
-def Fotoaufnehmen (indx, fotoPfad, scanName):#nimmt ein Foto mit der PiCam auf
-    print('index: ', indx, 'FotoPfad: ', fotoPfad)
+def currentCam(): #returns the currently used camera
+    return 'PiCam'
+
+
+def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with the available camera
+
+    #print('index: ', indx, 'FotoPfad: ', fotoPfad)
+
+    #check whether the current taken picture needs to have one, two or none leading zero (always have 3 digits)
+    #(makes sorting the pictures easiert - depends on used software)
     strindx = indx
     if indx <= 9:
         strindx = '00' + str(indx)
     elif indx > 9 <=99:
         strindx = '0' + str(indx)
-    camera.capture(str(fotoPfad)+ '/'+ str(scanName)+ '_'+ str(strindx)+ '.jpg')
-    print('Foto '+ str(indx)+ ' aufgenommen: ')#+ {timestamp:%Y-%m-%d-%H-%M})
+
+    if currentCam() == 'PiCam':
+        camera.led = True
+        camera.capture(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
+        print('Foto ' + str(indx) + ' aufgenommen: ')  # + {timestamp:%Y-%m-%d-%H-%M})
+        time.sleep(2)
+        camera.led = False
+    #elif currentCam() == 'Nikon':
+        #activate autofocus
+        # make sure autofocus works? Is there a method that return a bool if focus is right?
+
+        # fix the camera settings?
+        # is there a manual mode? can auto exposure controll be received via python?
+
+        # finally take a picture
+        # append a suffix to picture, so it's clear that it was taken by the big camera?
     return
 
-def makeDirectory(dirPfad, dirName):#erstellt ein Verzeichnis mit Name dirName am Pfad dirPfad
-    fullDir = dirPfad + dirName
-    if not os.path.exists(fullDir): #Verzeichnis existiert noch nicht
-        os.makedirs(fullDir)        #Erstellt das Verzeichnis
-    else:
-        while os.path.exists(fullDir):  #Pfand existiert bereits
-            fullDir += '+'              #Hängt ein + an den Pfad an, solange bis der Pfand eindeutig ist
-        print 'Verzeichnis existiert bereits. Fotos werden unter: '+ fullDir + ' gespeichert.'
-        os.makedirs(fullDir)            #Erstelt das Verzeichnis
+def makeDirectory(dirPfad, dirName):#makes a directory with the name: 'dirName' and the path: 'dirPfad'
+
+    fullDir = dirPfad + dirName #stitch path and name together to get full path
+
+    #checks whether the directory already exists
+    if not os.path.exists(fullDir): #if it doesn't
+        os.makedirs(fullDir)        #creates the directory
+    else: #if it does
+        while os.path.exists(fullDir):  #repeat as long there is an directory with exactly this path/name
+            fullDir += '+'              #appends a '+' to the path/name
+        #print 'Verzeichnis existiert bereits. Fotos werden unter: '+ fullDir + ' gespeichert.'
+        os.makedirs(fullDir)            #creates the directory
     return fullDir
 
-def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Umdrehung
-    # (Durch Uebersetztung zwischen zwei verschiednene Pulleys bedingt)
-    Schritter = 0
+def getStepsforRevolution():#method for determine the steps for each revolution empirically
+    #!IMPORTANT!
+    #Use only if the gearing ratio between steppermotor and turntable IS NOT 1:1 (else use 1600)
+    #If gearing ratio is known one can use this method to check if it's correct
+    #The value doesn't have to be super accurate
 
+    Schritter = 0
     while raw_input('Schritter starten? (y/n)')=='y':
         Stepper = raw_input('Wieviele Schritte?')
         bauffer = int(Stepper)
@@ -125,69 +155,69 @@ def getStepsforRevolution():#Methode bestimmt die noetigen Schritte für eine Um
         print('Schritter: ', Schritter)
     return
 
-def setupCamera(lighting):#setzt die Parameter der Cam (lighting = Lichverhältnisse)
-    print('Kamera wird vorgewärmt')
-    time.sleep(2)
-    print('Kamera fertig. Einstellungen werden gespeichert')
+def getOverexposerValue():
+    #determine the right value of the exposure with the rotary encoder and the big display
+    value = 5000
+    return value
 
-    overExposerValue = 5000
+def setupCamera(): #used to set up various parameters of the camera
 
-    camera.resolution = (2592, 1944)#5Megapixel Aufloesung - volle Aufloesung
+    camera.resolution = (2592, 1944) #max resolution of the RaspiCam
 
     camera.sharpness = 1
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
-
-    if lighting:#Gute Lichtverhaeltnisse
-        camera.iso = 200
-
-        bufferAll = camera.exposure_speed
-        print('bufferALLPRE: ', bufferAll)
-        bufferAll = int(bufferAll) + overExposerValue
-        print('bufferALLAFTER: ', bufferAll)
-        camera.shutter_speed = int(bufferAll)
-
-
-    else:#schlechte lichverhaeltnisse
-        camera.iso = 800
-        camera.shutter_speed = 2000000 #2Sekunden verschlusszeit
-
-    camera.exposure_mode = 'off'
+    camera.iso = 100
+    camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
     whiteBalanceBuffer = camera.awb_gains
     camera.awb_mode = 'off'
     camera.awb_gains = whiteBalanceBuffer
 
+    overExposerValue = getOverexposerValue()
+
+    bufferAll = camera.exposure_speed
+    print('bufferALLPRE: ', bufferAll)
+    bufferAll = int(bufferAll) + overExposerValue
+    print('bufferALLAFTER: ', bufferAll)
+    camera.shutter_speed = int(bufferAll)
+
     return
 
-def setupDisplay(helligkeit, colon): #Bereitet das Display vor. Damit anzeige ordentlich ist.
+def setupDisplay(helligkeit, colon): #sets up the display
     display.begin()
 
-    display.set_colon(colon) #True oder False -- setzt den Dezimalpunkt
+    display.set_colon(colon) #True oder False
 
-    if helligkeit >= 0 and helligkeit <= 15: #Range der möglichen Helligkeit
+    """if helligkeit >= 0 and helligkeit <= 15: #Range of possible brightness of display
         display.set_brightness(helligkeit)
     else:
-        display.set_brightness(15)   #Falls ungültige Eingabe
+        display.set_brightness(15)   #if value is wrong
+    """
+    try: #Range is between 0 and 15
+        display.set_brightness(helligkeit)
+    except:
+        display.set_brightness(15)
     return
 
-def writeToDisplay(zahl):#schrieb eine Zahl ins Diaplay --Buchstaben gehen nur A-F Nicht hilfreich
-    display.clear()
-    zahl = str(zahl) #um sicher zu stellen, dass Zahl ein string ist
+def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 0-9 -- max 4 digits
+
+    display.clear() # clears the buffer of the display
+    zahl = str(zahl) # make sure the number is a string
     display.print_number_str(zahl)
-    display.write_display()
-    #time.sleep(0.5)
+    display.write_display() #writes the buffer to the display
     return
 
-def setDirection(richtung): #Legt die Drehrichtung des Drehtellers fest. (Ist für diese Anwendung irrelevant)
+def setDirection(richtung): #sets the direction of the steppermotor (not important for a 3D scan)
     if str(richtung) == 'left':
         gpio.output(23, True)
     elif str(richtung) == 'right':
         gpio.output(23, False)
     return
 
-def blinkDisplay(speed): #Lässt das Display ein mal blinken. Vielleicht Hilfreich wenn man auf Eingabe wartet.
+def blinkDisplay(speed): #makes the display blink once. Maybe usefull while waiting for user input
     timing = 0
+    #speed determines the frequency of the blinking
     if speed == 'slow':
         timing = 0.5
     elif speed == 'medium':
@@ -202,14 +232,13 @@ def blinkDisplay(speed): #Lässt das Display ein mal blinken. Vielleicht Hilfrei
         time.sleep(timing)
     return
 
-def getAnzahlFoto(): #laesst die Anazhl der Bilder anhand des Encoders und des Displays bestimmen
-    #schreibe einen Beispielwert ins Display(10)
-    print('in getAnzahlFotos')
-    currentFotoAnzahl = 20
-    writeToDisplay(currentFotoAnzahl)
-    last_state = None
+def getAnzahlFoto(): #uses the small display and the rotary encoder to let the user input a value for the number of pictures
 
-    #RotaryEncoder Bewegung Abfragen
+    currentFotoAnzahl = 20
+    writeToDisplay(currentFotoAnzahl) # writes a starting point into the display
+    last_state = None #needed for correct reading of button press
+
+    #RotaryEncoder get the movement
 
     while True:
         delta = encoder.get_cycles()
@@ -281,8 +310,8 @@ def writeMeta(pfad, name, setcount):
 #========================================================================
 
 try: #Variablen ins Programm uebergeben
-        AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
-        writeToDisplay(AnzahlFotos) #schreibt das ins Display
+    AnzahlFotos = int(sys.argv[1])#Schiebt das 1. Argument des Programmaufrufs in Anzahlfotos
+    writeToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
     AnzahlFotos = getAnzahlFoto()  # Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
@@ -311,7 +340,7 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 #print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
-setupCamera(licht)
+setupCamera()
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
@@ -322,11 +351,8 @@ while moveCounter < AnzahlFotos:
     moveCounter += 1
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
-    camera.led = True
     camera.start_preview(alpha=128, fullscreen=True)
-    time.sleep(2) #Wartezeit zwischen den einzelnen Fotos
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
-    camera.led = False
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 
