@@ -26,7 +26,9 @@ gpio.setmode(gpio.BCM)
 gpio.setup(23, gpio.OUT) #Dir
 gpio.setup(24, gpio.OUT) #Step
 gpio.setup(25, gpio.OUT) #enable pin
-gpio.setup(4, gpio.OUT) #Sleep? ##NACHGUCKEN==============================================================
+
+#GPIO for using the switch of the rotary encoder seperately
+gpio.setup(4, gpio.OUT)
 
 #make instance of camera
 camera = picamera.PiCamera()
