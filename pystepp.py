@@ -308,6 +308,19 @@ def writeMeta(pfad, name, setcount):
     #<rights>CC BY-NC 4.0</rights>
     #<comment>schlechte Lichtbedingungen</comment>
     return
+
+
+#========================================================================
+#MAIN
+#========================================================================
+setDirection('right')
+setupDisplay(15,False)
+
+#Variablen
+#AnzahlSteps = 0
+moveCounter = 0
+licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft?
+
 #========================================================================
 #Parameter vom User erfragen
 #========================================================================
@@ -320,16 +333,6 @@ except: #oder im Programm abfragen
     print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
 
-#========================================================================
-#MAIN
-#========================================================================
-setDirection('right')
-setupDisplay(15,False)
-
-#Variablen
-#AnzahlSteps = 0
-moveCounter = 0
-licht = True #True = hell /False = Dunkel Wird durch lichtsensor überprüft?
 
 AnzahlSteps = AnzahlFotosToSteps(AnzahlFotos)
 
