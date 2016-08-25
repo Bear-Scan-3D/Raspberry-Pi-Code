@@ -344,7 +344,6 @@ dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
-#print('Ganzer Pfad: ', speicherPfad)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera()
@@ -354,7 +353,6 @@ enableMotor(True)#Easydriver vor Bewegung anschalten
 
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
-    print ('Schritt: ', moveCounter)
     moveCounter += 1
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
