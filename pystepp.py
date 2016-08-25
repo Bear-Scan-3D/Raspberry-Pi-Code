@@ -12,6 +12,7 @@ import gaugette.rotary_encoder
 import gaugette.switch
 
 import picamera #for use with the RaspiCam
+import piggyphoto
 import os
 
 
@@ -30,9 +31,6 @@ gpio.setup(25, gpio.OUT) #enable pin
 #GPIO for using the switch of the rotary encoder seperately
 gpio.setup(4, gpio.OUT)
 
-#make instance of camera
-camera = picamera.PiCamera()
-
 #make instance of display
 display = SevenSegment.SevenSegment()
 
@@ -50,6 +48,8 @@ encoder.steps_per_cycle = 4 #adjust the triggering amount of steps for the rotar
 #setting up a range for the amount of pictures for each scan
 maxFotos = 150 #The more the better? Whats the limit? When doesn't it matter anymore?
 minFotos = 5 #Probably should be at least arround 10 for good results
+
+usedCamera = '' #can also be Nikon or RaspiCam
 
 #========================================================================
 #Methods
@@ -96,9 +96,6 @@ def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the gi
     AnzahlSteps = int(2360/AnzahlFotos) #2360 from getStepsforRevolution() method
     return AnzahlSteps
 
-def currentCam(): #returns the currently used camera
-    return 'PiCam'
-
 
 def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with the available camera
 
@@ -112,21 +109,16 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
     elif indx > 9 <=99:
         strindx = '0' + str(indx)
 
-    if currentCam() == 'PiCam':
+    if usedCamera == 'RaspiCam':
         camera.led = True
         camera.capture(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
-        print('Foto ' + str(indx) + ' aufgenommen: ')  # + {timestamp:%Y-%m-%d-%H-%M})
+        print('Foto ' + str(indx) + ' aufgenommen: ')
         time.sleep(2)
         camera.led = False
-    #elif currentCam() == 'Nikon':
-        #activate autofocus
-        # make sure autofocus works? Is there a method that return a bool if focus is right?
-
-        # fix the camera settings?
-        # is there a manual mode? can auto exposure controll be received via python?
-
-        # finally take a picture
-        # append a suffix to picture, so it's clear that it was taken by the big camera?
+    elif usedCamera == 'Nikon':
+        print('Nikon')
+        cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
+        time.sleep(2)
     return
 
 def makeDirectory(dirPfad, dirName):#makes a directory with the name: 'dirName' and the path: 'dirPfad'
@@ -163,30 +155,48 @@ def getOverexposerValue():
     value = 5000
     return value
 
-def setupCamera(): #used to set up various parameters of the camera
+def setupCamera(chosenCam, status): #used to set up various parameters of the camera
 
-    camera.resolution = (2592, 1944) #max resolution of the RaspiCam
+    if chosenCam == 'RaspiCam' and status == 1:
+        usedCamera = 'RaspiCam'
+        # make instance of camera
+        camera = picamera.PiCamera()
 
-    camera.sharpness = 1
-    camera.contrast = 0
-    camera.brightness = 50
-    camera.saturation = 0
-    camera.iso = 100
-    camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
-    whiteBalanceBuffer = camera.awb_gains
-    print('gains: '+str(whiteBalanceBuffer))
-    print('mmode: ' + str(camera.awb_mode))
-    camera.awb_mode = 'off'
-    camera.awb_gains = whiteBalanceBuffer
+        camera.resolution = (2592, 1944) #max resolution of the RaspiCam
+        camera.sharpness = 1
+        camera.contrast = 0
+        camera.brightness = 50
+        camera.saturation = 0
+        camera.iso = 100
+        camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
+        whiteBalanceBuffer = camera.awb_gains
+        print('gains: '+str(whiteBalanceBuffer))
+        print('mmode: ' + str(camera.awb_mode))
+        camera.awb_mode = 'off'
+        camera.awb_gains = whiteBalanceBuffer
+        camera.start_preview(alpha=128, fullscreen=True)
 
-    #overExposerValue = getOverexposerValue()
+        #overExposerValue = getOverexposerValue()
 
-    #bufferAll = camera.exposure_speed
-    #print('bufferALLPRE: ', bufferAll)
-    #bufferAll = int(bufferAll) + overExposerValue
-    #print('bufferALLAFTER: ', bufferAll)
-    #camera.shutter_speed = int(bufferAll)
+        #bufferAll = camera.exposure_speed
+        #print('bufferALLPRE: ', bufferAll)
+        #bufferAll = int(bufferAll) + overExposerValue
+        #print('bufferALLAFTER: ', bufferAll)
+        #camera.shutter_speed = int(bufferAll)
 
+
+    if chosenCam == 'Nikon' and status == 1:
+        usedCamera = 'Nikon'
+        cam = piggyphoto.camera()
+
+        print('Nikon')
+
+    if status == 0:
+        if chosenCam == 'RaspiCam':
+            camera.close()
+        elif chosenCam == 'Nikon':
+            #donothing
+            time.sleep(0.00001)
     return
 
 def setupDisplay(helligkeit, colon): #sets up the display
@@ -346,7 +356,8 @@ dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
-setupCamera()
+
+setupCamera('Nikon', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
@@ -356,18 +367,15 @@ while moveCounter < AnzahlFotos:
     moveCounter += 1
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
-    camera.start_preview(alpha=128, fullscreen=True)
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
+setupCamera('Nikon', 0)
 
 checkForButton()
-#raw_input('Motor Sleep')#wait for any key
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
-camera.close()
 display.clear()
 
 #ENDE
-#Testcomment für Revision2
