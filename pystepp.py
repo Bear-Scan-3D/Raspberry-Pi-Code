@@ -179,10 +179,10 @@ def setupCamera(): #used to set up various parameters of the camera
 
     #overExposerValue = getOverexposerValue()
 
-    bufferAll = camera.exposure_speed
-    print('bufferALLPRE: ', bufferAll)
-    bufferAll = int(bufferAll) + overExposerValue
-    print('bufferALLAFTER: ', bufferAll)
+    #bufferAll = camera.exposure_speed
+    #print('bufferALLPRE: ', bufferAll)
+    #bufferAll = int(bufferAll) + overExposerValue
+    #print('bufferALLAFTER: ', bufferAll)
     #camera.shutter_speed = int(bufferAll)
 
     return
