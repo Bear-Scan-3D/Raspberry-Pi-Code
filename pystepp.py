@@ -171,19 +171,19 @@ def setupCamera(): #used to set up various parameters of the camera
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
-    camera.iso = 100
-    camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
-    whiteBalanceBuffer = camera.awb_gains
-    camera.awb_mode = 'off'
-    camera.awb_gains = whiteBalanceBuffer
+    #camera.iso = 100
+    #camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
+    #whiteBalanceBuffer = camera.awb_gains
+    #camera.awb_mode = 'off'
+    #camera.awb_gains = whiteBalanceBuffer
 
-    overExposerValue = getOverexposerValue()
+    #overExposerValue = getOverexposerValue()
 
     bufferAll = camera.exposure_speed
     print('bufferALLPRE: ', bufferAll)
     bufferAll = int(bufferAll) + overExposerValue
     print('bufferALLAFTER: ', bufferAll)
-    camera.shutter_speed = int(bufferAll)
+    #camera.shutter_speed = int(bufferAll)
 
     return
 
@@ -271,7 +271,6 @@ def writeMeta(pfad, name, setcount):
     metafile = open('%s/META-%s.txt' % (pfad,name), 'w')
     metafile.write('<name>'+ name + '</name>\n')
     metafile.write('<setcount>'+ str(setcount) + '</setcount>\n')
-    #NTP auf dem Raspberry Pi aktiviert?
 
     timeYear = time.strftime('%Y-%m-%d')
     metafile.write('<date>' + str(timeYear) + '</date>\n')
@@ -330,7 +329,7 @@ try: #Variablen ins Programm uebergeben
     writeToDisplay(AnzahlFotos) #schreibt das ins Display
 except: #oder im Programm abfragen
     AnzahlFotos = getAnzahlFoto()  # Ermittelt Anzahl der gewollten Fotos über Rotary Encoder und Display
-    print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
+    #print ('Keine Parameter angegeben. Bitte Anzahl der Fotos angeben')
     #AnzahlFotos = input("Anzahl der Fotos: ")
 
 
