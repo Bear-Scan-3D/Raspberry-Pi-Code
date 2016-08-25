@@ -171,11 +171,13 @@ def setupCamera(): #used to set up various parameters of the camera
     camera.contrast = 0
     camera.brightness = 50
     camera.saturation = 0
-    #camera.iso = 100
-    #camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
-    #whiteBalanceBuffer = camera.awb_gains
-    #camera.awb_mode = 'off'
-    #camera.awb_gains = whiteBalanceBuffer
+    camera.iso = 100
+    camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
+    whiteBalanceBuffer = camera.awb_gains
+    print('gains: '+whiteBalanceBuffer)
+    print('mmode: ' + str(camera.awb_mode))
+    camera.awb_mode = 'off'
+    camera.awb_gains = whiteBalanceBuffer
 
     #overExposerValue = getOverexposerValue()
 
