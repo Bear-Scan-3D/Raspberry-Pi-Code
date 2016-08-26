@@ -56,17 +56,29 @@ usedCamera = '' #can also be Nikon or RaspiCam
 #========================================================================
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
-    StepCounter = 0
-    while StepCounter < steps:
+    stepCounter = 0
+    maxSpeed = 0.001
+    jerkSpeed = 0.1
+    acceleration = 0.15
+    brakeThreshold = 50
+    currentSpeed = jerkSpeed
+
+    while stepCounter < steps:
         #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
         #Every 'pulse' the stepperdriver makes one microstep
         gpio.output(24, True)
         time.sleep(0.000002)
         gpio.output(24, False)
-        StepCounter += 1
+        stepCounter += 1
+        time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
-        time.sleep(0.01)#the speed of the steppermotor is controlled by a waiting time between ever microstep
-        #if the turntable/objects is very heavy the speed should be especially slow
+        deltaSteps = steps - stepCounter #calculates the steps that are left
+
+        if currentSpeed > maxSpeed and deltaSteps > brakeThreshold:
+            currentSpeed *= acceleration
+        elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
+            currentSpeed /= acceleration
+
     return
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
@@ -93,7 +105,7 @@ def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the gi
     #only works if the turntable and the steppermotor is coupled with a 1:1 gearing ration
     #for every other ration please use getStepsforRevolution() method
 
-    AnzahlSteps = int(2360/AnzahlFotos) #2360 from getStepsforRevolution() method
+    AnzahlSteps = int(2400/AnzahlFotos)
     return AnzahlSteps
 
 
