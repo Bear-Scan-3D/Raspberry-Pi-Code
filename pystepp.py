@@ -59,7 +59,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
     maxSpeed = 0.0001
     jerkSpeed = 0.01
-    acceleration = 0.99
+    acceleration = 0.95
     brakeThreshold = 100
     currentSpeed = jerkSpeed
 
