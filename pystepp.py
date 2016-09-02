@@ -12,7 +12,7 @@ import gaugette.rotary_encoder
 import gaugette.switch
 
 import picamera #for use with the RaspiCam
-import piggyphoto
+#import piggyphoto
 import os
 
 
