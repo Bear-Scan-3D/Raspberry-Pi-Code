@@ -57,7 +57,7 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.001
+    maxSpeed = 0.005
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -86,7 +86,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
             currentSpeed /= acceleration
 
 
-    time.sleep(2)
+    time.sleep(1)
     return
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
