@@ -84,7 +84,9 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
-    time.sleep(1)
+
+
+    time.sleep(2)
     return
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
