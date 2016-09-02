@@ -58,11 +58,13 @@ usedCamera = '' #can also be Nikon or RaspiCam
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
     maxSpeed = 0.001
-    jerkSpeed = 0.008
-    acceleration = 0.985
+    jerkSpeed = 0.01
+    acceleration = 0.98
+
     brakeThreshold = 100
     if steps < (brakeThreshold*2):
         brakeThreshold = steps/2
+
     currentSpeed = jerkSpeed
 
     while stepCounter < steps:
@@ -82,7 +84,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
-
+    time.sleep(1)
     return
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
