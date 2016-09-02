@@ -60,7 +60,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
     maxSpeed = 0.0001
     jerkSpeed = 0.01
     acceleration = 0.99
-    brakeThreshold = 50
+    brakeThreshold = 100
     currentSpeed = jerkSpeed
 
     while stepCounter < steps:
@@ -76,7 +76,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         deltaSteps = steps - stepCounter #calculates the steps that are left
         print('Deltasteps: ', deltaSteps)
 
-        if currentSpeed > maxSpeed and deltaSteps > brakeThreshold:
+        if currentSpeed > maxSpeed and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
