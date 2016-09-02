@@ -57,7 +57,7 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.005
+    maxSpeed = 0.001
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -71,7 +71,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
         #Every 'pulse' the stepperdriver makes one microstep
         gpio.output(24, True)
-        time.sleep(0.00002)
+        #time.sleep(0.00002)
         gpio.output(24, False)
         stepCounter += 1
         #print('currentSpeedvorSleep: ',currentSpeed)
@@ -345,7 +345,8 @@ def writeMeta(pfad, name, setcount):
 #MAIN
 #========================================================================
 setDirection('right')
-setupDisplay(15,False)
+#setupDisplay(15,False)
+display.begin()
 
 #Variablen
 #AnzahlSteps = 0
@@ -385,9 +386,10 @@ enableMotor(True)#Easydriver vor Bewegung anschalten
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     moveCounter += 1
-    time.sleep (0.1)
-    writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
+    deltaFotos = AnzahlFotos - moveCounter
+    writeToDisplay(deltaFotos) #Restliche Anzahl von Fotos ins Display schreiben
+    time.sleep (0.1)
     #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
