@@ -22,6 +22,7 @@ import os
 
 #setting up all the GPIO Pins so that they can be manipulated later
 gpio.setmode(gpio.BCM)
+gpio.cleanup()
 
 #GPIO for control of steppermotor
 gpio.setup(23, gpio.OUT) #Dir
