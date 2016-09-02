@@ -74,11 +74,11 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         time.sleep(0.00002)
         gpio.output(24, False)
         stepCounter += 1
-        print('currentSpeedvorSleep: ',currentSpeed)
+        #print('currentSpeedvorSleep: ',currentSpeed)
         time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
         deltaSteps = steps - stepCounter #calculates the steps that are left
-        print('Deltasteps: ', deltaSteps)
+        #print('Deltasteps: ', deltaSteps)
 
         if currentSpeed > maxSpeed and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
@@ -383,6 +383,7 @@ enableMotor(True)#Easydriver vor Bewegung anschalten
 while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     moveCounter += 1
+    time.sleep (0.1)
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
     #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
