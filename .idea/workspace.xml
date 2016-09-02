@@ -28,8 +28,8 @@
       <file leaf-file-name="pystepp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pystepp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="78" column="67" selection-start-line="78" selection-start-column="67" selection-end-line="78" selection-end-column="67" />
+            <state relative-caret-position="340">
+              <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
               <folding>
                 <element signature="e#47#89#0" expanded="true" />
               </folding>
@@ -182,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472836712238</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Accel Test&#10;">
+      <created>1472837043622</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1472837043622</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -242,8 +249,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pystepp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="78" column="67" selection-start-line="78" selection-start-column="67" selection-end-line="78" selection-end-column="67" />
+        <state relative-caret-position="340">
+          <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
           </folding>
