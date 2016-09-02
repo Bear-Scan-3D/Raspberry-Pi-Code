@@ -59,8 +59,8 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
     maxSpeed = 0.001
     jerkSpeed = 0.1
-    acceleration = 0.15
-    brakeThreshold = 50
+    acceleration = 0.9
+    brakeThreshold = 20
     currentSpeed = jerkSpeed
 
     while stepCounter < steps:
@@ -70,9 +70,11 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         time.sleep(0.000002)
         gpio.output(24, False)
         stepCounter += 1
+        print('currentSpeedvorSleep: ',currentSpeed)
         time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
         deltaSteps = steps - stepCounter #calculates the steps that are left
+        print('Deltasteps: ', deltaSteps)
 
         if currentSpeed > maxSpeed and deltaSteps > brakeThreshold:
             currentSpeed *= acceleration
