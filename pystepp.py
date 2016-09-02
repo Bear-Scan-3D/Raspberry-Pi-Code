@@ -57,10 +57,10 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.005
+    maxSpeed = 0.0001
     jerkSpeed = 0.05
-    acceleration = 0.8
-    brakeThreshold = 20
+    acceleration = 0.999
+    brakeThreshold = 50
     currentSpeed = jerkSpeed
 
     while stepCounter < steps:
@@ -386,7 +386,7 @@ while moveCounter < AnzahlFotos:
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 #setupCamera('Nikon', 0)
 
-checkForButton()
+#checkForButton()
 
 #GPIO freigeben, damit andere Programme damit arbeiten koennen
 gpio.cleanup()
