@@ -369,7 +369,7 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 
-setupCamera('Nikon', 1)
+#setupCamera('Nikon', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
@@ -379,10 +379,10 @@ while moveCounter < AnzahlFotos:
     moveCounter += 1
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
 
-    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
+    #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
-setupCamera('Nikon', 0)
+#setupCamera('Nikon', 0)
 
 checkForButton()
 
