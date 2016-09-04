@@ -239,8 +239,12 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
 
     display.clear() # clears the buffer of the display
 
+    zahl = str(zahl)  # make sure the number is a string
+    display.print_number_str(zahl)
+    display.write_display()  # writes the buffer to the display
+
     tries = 0
-    while tries < 10:
+    """while tries < 10:
         try:
             zahl = str(zahl)  # make sure the number is a string
             display.print_number_str(zahl)
@@ -248,7 +252,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
         except IOError:
             tries += 1  # optional flag to signal your code to resend or something
             print ('Tries: ' + str(tries))
-            time.sleep(1)
+            time.sleep(1)"""
     return
 
 def setDirection(richtung): #sets the direction of the steppermotor (not important for a 3D scan)
