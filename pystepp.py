@@ -22,7 +22,6 @@ import os
 
 #setting up all the GPIO Pins so that they can be manipulated later
 gpio.setmode(gpio.BCM)
-gpio.cleanup()
 
 #GPIO for control of steppermotor
 gpio.setup(23, gpio.OUT) #Dir
@@ -248,7 +247,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
             display.write_display()  # writes the buffer to the display
         except IOError:
             tries += 1  # optional flag to signal your code to resend or something
-            print ('Tries: ' + tries)
+            print ('Tries: ' + str(tries))
             time.sleep(1)
     return
 
