@@ -244,7 +244,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
     display.write_display()  # writes the buffer to the display"""
 
     tries = 0
-    while tries < 10:
+    while tries < 10: # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
         try:
             print ('try?'+str(tries))
             zahl = str(zahl)  # make sure the number is a string
@@ -252,12 +252,10 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
             display.write_display()  # writes the buffer to the display
             break
         except IOError:
-            tries += 1  # optional flag to signal your code to resend or something
-            print ('Tries: ' + str(tries))
-            #time.sleep(1)
+            tries += 1
     return
 
-def setDirection(richtung): #sets the direction of the steppermotor (not important for a 3D scan)
+def setDirection(richtung): # sets the direction of the steppermotor (not important for a 3D scan)
     if str(richtung) == 'left':
         gpio.output(23, True)
     elif str(richtung) == 'right':
@@ -388,11 +386,11 @@ enableMotor(False)
 dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
-#speicherPfad = makeDirectory(dirPfad, dirName)
-#writeMeta(speicherPfad, dirName, AnzahlFotos)
+speicherPfad = makeDirectory(dirPfad, dirName)
+writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 
-#setupCamera('Nikon', 1)
+setupCamera('RaspiCam', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
@@ -404,10 +402,10 @@ while moveCounter < AnzahlFotos:
     deltaFotos = AnzahlFotos - moveCounter
     writeToDisplay(deltaFotos) #Restliche Anzahl von Fotos ins Display schreiben
     time.sleep (0.1)
-    #Fotoaufnehmen(moveCounter, speicherPfad, dirName)
+    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
-#setupCamera('Nikon', 0)
+setupCamera('RaspiCam', 0)
 
 #checkForButton()
 
