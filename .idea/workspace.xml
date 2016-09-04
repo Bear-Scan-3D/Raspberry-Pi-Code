@@ -28,8 +28,8 @@
       <file leaf-file-name="pystepp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pystepp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-935">
-              <caret line="176" column="16" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="16" />
+            <state relative-caret-position="147">
+              <caret line="385" column="1" selection-start-line="385" selection-start-column="1" selection-end-line="385" selection-end-column="1" />
               <folding>
                 <element signature="e#47#89#0" expanded="true" />
               </folding>
@@ -508,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472841750684</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Display ioError">
+      <created>1473006225025</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1473006225025</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -549,7 +556,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Nikon implementation&#10;" />
     <MESSAGE value="Accel Test&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Accel Test&#10;" />
+    <MESSAGE value="Display ioError" />
+    <option name="LAST_COMMIT_MESSAGE" value="Display ioError" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -617,8 +625,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pystepp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-935">
-          <caret line="176" column="16" selection-start-line="176" selection-start-column="16" selection-end-line="176" selection-end-column="16" />
+        <state relative-caret-position="147">
+          <caret line="385" column="1" selection-start-line="385" selection-start-column="1" selection-end-line="385" selection-end-column="1" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
           </folding>
