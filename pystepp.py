@@ -248,7 +248,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
     tries = 0
     while tries < 10: # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
         try:
-            print ('try?'+str(tries)+'Zahl: '+zahl)
+            print ('try?'+str(tries)+'Zahl: '+ str(zahl))
             zahl = str(zahl)  # make sure the number is a string
             display.print_number_str(zahl)
             display.write_display()  # writes the buffer to the display
