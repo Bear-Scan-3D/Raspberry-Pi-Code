@@ -29,8 +29,8 @@ gpio.setup(24, gpio.OUT) #Step
 gpio.setup(25, gpio.OUT) #enable pin
 
 #GPIO for using the switch of the rotary encoder seperately
-#gpio.setup(4, gpio.IN, pull_up_down = gpio.PUD_DOWN)
-gpio.setup(4, gpio.OUT)
+gpio.setup(4, gpio.IN, pull_up_down = gpio.PUD_DOWN)
+#gpio.setup(4, gpio.OUT)
 #make instance of display
 display = SevenSegment.SevenSegment()
 
@@ -182,7 +182,7 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
     if chosenCam == 'RaspiCam' and status == 1:
         usedCamera = 'RaspiCam'
         # make instance of camera
-        camera = picamera.PiCamera()
+        #camera = picamera.PiCamera()
 
         camera.resolution = (2592, 1944) #max resolution of the RaspiCam
         camera.sharpness = 1
