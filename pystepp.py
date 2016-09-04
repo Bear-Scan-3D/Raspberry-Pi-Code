@@ -177,6 +177,8 @@ def getOverexposerValue():
 
 def setupCamera(chosenCam, status): #used to set up various parameters of the camera
 
+    camera = picamera.PiCamera()
+
     if chosenCam == 'RaspiCam' and status == 1:
         usedCamera = 'RaspiCam'
         # make instance of camera
@@ -246,7 +248,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
     tries = 0
     while tries < 10: # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
         try:
-            print ('try?'+str(tries))
+            print ('try?'+str(tries)+'Zahl: '+zahl)
             zahl = str(zahl)  # make sure the number is a string
             display.print_number_str(zahl)
             display.write_display()  # writes the buffer to the display
@@ -399,9 +401,7 @@ while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     moveCounter += 1
 
-    deltaFotos = AnzahlFotos - moveCounter
-    writeToDisplay(deltaFotos) #Restliche Anzahl von Fotos ins Display schreiben
-    time.sleep (0.1)
+    writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
