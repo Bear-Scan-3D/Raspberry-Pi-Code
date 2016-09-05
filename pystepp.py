@@ -58,7 +58,9 @@ camera = picamera.PiCamera()
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.0015
+    #maxSpeed = 0.0015
+    maxSpeed = 0.01
+
     jerkSpeed = 0.01
     acceleration = 0.98
 
