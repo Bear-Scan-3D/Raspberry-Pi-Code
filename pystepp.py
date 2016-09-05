@@ -81,7 +81,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
-        if currentSpeed > maxSpeed and stepCounter < (brakeThreshold+50):
+        if currentSpeed > maxSpeed and stepCounter < (brakeThreshold+100):
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
@@ -414,9 +414,7 @@ while moveCounter < AnzahlFotos:
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
-end = time.time()
-print ('Start: ', start)
-print('Time:',end - start)
+print('Time:',time.time() - start,' seconds.')
 
 #checkForButton()
 
