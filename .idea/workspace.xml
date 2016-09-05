@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f4cfff8e-89ad-456f-a3a6-f6f4162556af" name="Default" comment="RaspiCam Test">
+    <list default="true" id="f4cfff8e-89ad-456f-a3a6-f6f4162556af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Raspberry-Pi-Code.iws" />
@@ -636,7 +636,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473065898231</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="RaspiCam Test">
+      <created>1473066051357</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1473066051357</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
