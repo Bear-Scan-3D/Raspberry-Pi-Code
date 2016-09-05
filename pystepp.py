@@ -84,7 +84,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
 
         if currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
-        elif currentSpeed > maxSpeed and stepCounter < (brakeThreshold + 100):
+        elif currentSpeed > maxSpeed:# and stepCounter < (brakeThreshold + 100):
                 currentSpeed *= acceleration
 
     time.sleep(1)
