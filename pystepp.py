@@ -57,7 +57,7 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.001
+    maxSpeed = 0.005
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -178,7 +178,9 @@ def getOverexposerValue():
 
 def setupCamera(chosenCam, status): #used to set up various parameters of the camera
 
+    print('Vor Cam Setup')
     camera = picamera.PiCamera()
+    print('Nach Cam COntruktor')
 
     if chosenCam == 'RaspiCam' and status == 1:
         usedCamera = 'RaspiCam'
@@ -199,6 +201,8 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
         camera.awb_gains = whiteBalanceBuffer
         camera.start_preview(alpha=128, fullscreen=True)
 
+        print('Nach Cam Setups')
+
         #overExposerValue = getOverexposerValue()
 
         #bufferAll = camera.exposure_speed
@@ -210,7 +214,7 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
 
     if chosenCam == 'Nikon' and status == 1:
         usedCamera = 'Nikon'
-        cam = piggyphoto.camera()
+        #cam = piggyphoto.camera()
 
         print('Nikon')
 
@@ -360,7 +364,7 @@ def writeMeta(pfad, name, setcount):
 #MAIN
 #========================================================================
 setDirection('right')
-#setupDisplay(15,False)
+setupDisplay(15,False)
 display.begin()
 
 #Variablen
