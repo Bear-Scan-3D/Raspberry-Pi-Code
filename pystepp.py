@@ -117,7 +117,6 @@ def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the gi
     AnzahlSteps = int(2400/AnzahlFotos)
     return AnzahlSteps
 
-
 def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with the available camera
 
     #print('index: ', indx, 'FotoPfad: ', fotoPfad)
@@ -195,8 +194,8 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
         camera.iso = 100
         camera.exposure_mode = 'off' #=======================Right Value? What are the possibilities?
         whiteBalanceBuffer = camera.awb_gains
-        print('gains: '+str(whiteBalanceBuffer))
-        print('mmode: ' + str(camera.awb_mode))
+        #print('gains: '+str(whiteBalanceBuffer))
+        #print('mmode: ' + str(camera.awb_mode))
         camera.awb_mode = 'off'
         camera.awb_gains = whiteBalanceBuffer
         camera.start_preview(alpha=128, fullscreen=True)
@@ -253,7 +252,7 @@ def writeToDisplay(zahl): #writes a number (or string) to the display ABCDEF or 
     tries = 0
     while tries < 10: # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
         try:
-            print ('try?'+str(tries)+'Zahl: '+ str(zahl))
+            #print ('try?'+str(tries)+'Zahl: '+ str(zahl))
             zahl = str(zahl)  # make sure the number is a string
             display.print_number_str(zahl)
             display.write_display()  # writes the buffer to the display
@@ -403,11 +402,11 @@ enableMotor(True)#Easydriver vor Bewegung anschalten
 
 start = time.clock()
 while moveCounter < AnzahlFotos:
+    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     moveStepper (AnzahlSteps)
     moveCounter += 1
-
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
-    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
+
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
