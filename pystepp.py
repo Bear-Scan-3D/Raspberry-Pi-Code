@@ -89,6 +89,39 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
     time.sleep(1)
     return
 
+
+def rotateTurntable():
+
+    maxSpeed = 0.001
+    jerkSpeed = 0.01
+    acceleration = 0.98
+
+    brakeThreshold = 100
+    if steps < (brakeThreshold*2):
+        brakeThreshold = steps/2
+
+    currentSpeed = jerkSpeed
+
+    while True:
+        #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
+        #Every 'pulse' the stepperdriver makes one microstep
+        gpio.output(24, True)
+        #time.sleep(0.00002)
+        gpio.output(24, False)
+
+        #print('currentSpeedvorSleep: ',currentSpeed)
+        time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
+
+        deltaSteps = steps - stepCounter #calculates the steps that are left
+        #print('Deltasteps: ', deltaSteps)
+
+        if currentSpeed > maxSpeed and stepCounter < brakeThreshold:
+            currentSpeed *= acceleration
+        elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
+            currentSpeed /= acceleration
+
+    return
+
 def checkForButton(): #waits for user to press the button of the rotary encoder
     print('Please press the button of the knob.')
 
@@ -395,15 +428,16 @@ writeMeta(speicherPfad, dirName, AnzahlFotos)
 setupCamera('RaspiCam', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
+rotateTurntable()
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
 
-while moveCounter < AnzahlFotos:
+"""while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)
     moveCounter += 1
 
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
-
+"""
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
