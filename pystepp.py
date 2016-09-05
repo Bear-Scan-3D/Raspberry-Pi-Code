@@ -57,7 +57,7 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.001
+    maxSpeed = 0.01
     jerkSpeed = 0.01
     acceleration = 0.98
 
