@@ -50,6 +50,7 @@ maxFotos = 150 #The more the better? Whats the limit? When doesn't it matter any
 minFotos = 5 #Probably should be at least arround 10 for good results
 
 usedCamera = '' #can also be Nikon or RaspiCam
+camera = picamera.PiCamera()
 
 #========================================================================
 #Methods
@@ -183,7 +184,7 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
     print('chosenCam: ',chosenCam,'   status: ', status)
 
     if chosenCam == 'RaspiCam' and status == 1:
-        camera = picamera.PiCamera()
+
         usedCamera = 'RaspiCam'
         # make instance of camera
         #camera = picamera.PiCamera()
