@@ -28,10 +28,11 @@
       <file leaf-file-name="pystepp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pystepp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+            <state relative-caret-position="409">
+              <caret line="388" column="38" selection-start-line="388" selection-start-column="38" selection-end-line="388" selection-end-column="38" />
               <folding>
                 <element signature="e#47#89#0" expanded="true" />
+                <element signature="e#1883#2917#0" expanded="false" />
                 <element signature="e#6172#6292#0" expanded="false" />
                 <element signature="e#7832#8238#0" expanded="false" />
                 <element signature="e#8345#9023#0" expanded="false" />
@@ -339,13 +340,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1472146103910</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Accel Test&#10;">
-      <created>1472836429434</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1472836429434</updated>
     </task>
     <task id="LOCAL-00005" summary="Accel Test&#10;">
       <created>1472836576645</created>
@@ -683,7 +677,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473068256020</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="RaspiCam Test">
+      <created>1473068824974</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1473068824974</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -739,6 +740,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
+            <element signature="e#1883#2917#0" expanded="false" />
             <element signature="e#6172#6292#0" expanded="false" />
             <element signature="e#7832#8238#0" expanded="false" />
             <element signature="e#8345#9023#0" expanded="false" />
@@ -756,6 +758,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
+            <element signature="e#1883#2917#0" expanded="false" />
             <element signature="e#6172#6292#0" expanded="false" />
             <element signature="e#7832#8238#0" expanded="false" />
             <element signature="e#8345#9023#0" expanded="false" />
@@ -773,6 +776,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
+            <element signature="e#1883#2917#0" expanded="false" />
             <element signature="e#6172#6292#0" expanded="false" />
             <element signature="e#7832#8238#0" expanded="false" />
             <element signature="e#8345#9023#0" expanded="false" />
@@ -790,6 +794,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
+            <element signature="e#1883#2917#0" expanded="false" />
             <element signature="e#6172#6292#0" expanded="false" />
             <element signature="e#7832#8238#0" expanded="false" />
             <element signature="e#8345#9023#0" expanded="false" />
@@ -852,10 +857,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pystepp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+        <state relative-caret-position="409">
+          <caret line="388" column="38" selection-start-line="388" selection-start-column="38" selection-end-line="388" selection-end-column="38" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
+            <element signature="e#1883#2917#0" expanded="false" />
             <element signature="e#6172#6292#0" expanded="false" />
             <element signature="e#7832#8238#0" expanded="false" />
             <element signature="e#8345#9023#0" expanded="false" />
