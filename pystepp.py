@@ -92,7 +92,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
 
 def rotateTurntable():
 
-    maxSpeed = 0.01
+    maxSpeed = 0.1
     jerkSpeed = 0.1
     acceleration = 0.98
 
