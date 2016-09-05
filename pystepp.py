@@ -57,7 +57,7 @@ usedCamera = '' #can also be Nikon or RaspiCam
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.0001
+    maxSpeed = 0.001
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -80,11 +80,10 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
-        if currentSpeed > maxSpeed:# and stepCounter < brakeThreshold:
+        if currentSpeed > maxSpeed:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
-
 
     time.sleep(1)
     return
