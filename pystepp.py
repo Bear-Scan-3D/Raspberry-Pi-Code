@@ -403,7 +403,7 @@ enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
 
-start = time.clock()
+start = time.time()
 while moveCounter < AnzahlFotos:
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     moveStepper (AnzahlSteps)
@@ -414,7 +414,7 @@ while moveCounter < AnzahlFotos:
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
-end = time.clock()
+end = time.time()
 print ('Start: ', start)
 print('Time:',end - start)
 
