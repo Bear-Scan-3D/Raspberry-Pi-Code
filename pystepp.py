@@ -178,11 +178,12 @@ def getOverexposerValue():
 def setupCamera(chosenCam, status): #used to set up various parameters of the camera
 
     print('Vor Cam Setup')
-    camera = picamera.PiCamera()
+
     print('Nach Cam COntruktor')
     print('chosenCam: ',chosenCam,'   status: ', status)
 
     if chosenCam == 'RaspiCam' and status == 1:
+        camera = picamera.PiCamera()
         usedCamera = 'RaspiCam'
         # make instance of camera
         #camera = picamera.PiCamera()
