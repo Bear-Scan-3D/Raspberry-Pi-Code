@@ -106,19 +106,19 @@ def rotateTurntable():
         #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
         #Every 'pulse' the stepperdriver makes one microstep
         gpio.output(24, True)
-        time.sleep(0.00002)
+        #time.sleep(0.00002)
         gpio.output(24, False)
 
         print('currentSpeedvorSleep: ',currentSpeed)
         time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
-        """deltaSteps = steps - stepCounter #calculates the steps that are left
+        deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
         if currentSpeed > maxSpeed: #and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
-            currentSpeed /= acceleration"""
+            currentSpeed /= acceleration
 
     return
 
