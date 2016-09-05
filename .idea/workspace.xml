@@ -343,13 +343,6 @@
       <option name="presentableId" value="Default" />
       <updated>1472146103910</updated>
     </task>
-    <task id="LOCAL-00021" summary="Accel Test&#10;">
-      <created>1472839631290</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1472839631290</updated>
-    </task>
     <task id="LOCAL-00022" summary="Accel Test&#10;">
       <created>1472839724353</created>
       <option name="number" value="00022" />
@@ -686,7 +679,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473075394001</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="SpeedTest&#10;">
+      <created>1473075434917</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1473075434917</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="ToolWindowManager">
