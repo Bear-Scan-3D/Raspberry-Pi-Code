@@ -415,6 +415,7 @@ enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
 end = time.clock()
+print ('Start: ', start)
 print('Time:',end - start)
 
 #checkForButton()
