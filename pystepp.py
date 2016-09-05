@@ -77,50 +77,19 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         #print('currentSpeedvorSleep: ',currentSpeed)
         time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
-        deltaSteps = steps - stepCounter #calculates the steps that are left
+        """deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
         if currentSpeed > maxSpeed and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
-            currentSpeed /= acceleration
+            currentSpeed /= acceleration"""
 
 
     time.sleep(1)
     return
 
 
-def rotateTurntable():
-
-    maxSpeed = 0.1
-    jerkSpeed = 0.1
-    acceleration = 0.98
-
-    brakeThreshold = 100
-    if steps < (brakeThreshold*2):
-        brakeThreshold = steps/2
-
-    currentSpeed = jerkSpeed
-
-    while True:
-        #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
-        #Every 'pulse' the stepperdriver makes one microstep
-        gpio.output(24, True)
-        #time.sleep(0.00002)
-        gpio.output(24, False)
-
-        print('currentSpeedvorSleep: ',currentSpeed)
-        time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
-
-        deltaSteps = steps - stepCounter #calculates the steps that are left
-        #print('Deltasteps: ', deltaSteps)
-
-        if currentSpeed > maxSpeed: #and stepCounter < brakeThreshold:
-            currentSpeed *= acceleration
-        elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
-            currentSpeed /= acceleration
-
-    return
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
     print('Please press the button of the knob.')
