@@ -109,16 +109,16 @@ def rotateTurntable():
         #time.sleep(0.00002)
         gpio.output(24, False)
 
-        #print('currentSpeedvorSleep: ',currentSpeed)
+        print('currentSpeedvorSleep: ',currentSpeed)
         time.sleep(currentSpeed)#the speed of the steppermotor is controlled by a waiting time between ever microstep
 
-        deltaSteps = steps - stepCounter #calculates the steps that are left
+        """deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
         if currentSpeed > maxSpeed: #and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
-            currentSpeed /= acceleration
+            currentSpeed /= acceleration"""
 
     return
 
