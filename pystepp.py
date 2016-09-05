@@ -115,7 +115,7 @@ def rotateTurntable():
         deltaSteps = steps - stepCounter #calculates the steps that are left
         #print('Deltasteps: ', deltaSteps)
 
-        if currentSpeed > maxSpeed and stepCounter < brakeThreshold:
+        if currentSpeed > maxSpeed: #and stepCounter < brakeThreshold:
             currentSpeed *= acceleration
         elif currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
