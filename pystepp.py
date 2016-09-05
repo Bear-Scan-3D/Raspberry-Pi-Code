@@ -422,14 +422,14 @@ dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
-writeMeta(speicherPfad, dirName, AnzahlFotos)
+#writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 
 setupCamera('RaspiCam', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
-rotateTurntable()
-#getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
+#rotateTurntable()
+getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
 
 """while moveCounter < AnzahlFotos:
     moveStepper (AnzahlSteps)

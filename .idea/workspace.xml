@@ -28,8 +28,8 @@
       <file leaf-file-name="pystepp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pystepp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="423" column="46" selection-start-line="423" selection-start-column="46" selection-end-line="423" selection-end-column="46" />
+            <state relative-caret-position="511">
+              <caret line="424" column="1" selection-start-line="424" selection-start-column="1" selection-end-line="424" selection-end-column="1" />
               <folding>
                 <element signature="e#47#89#0" expanded="true" />
                 <element signature="e#7225#7345#0" expanded="false" />
@@ -588,7 +588,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473012326621</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="RaspiCam Test">
+      <created>1473061433614</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1473061433614</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -723,8 +730,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pystepp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="423" column="46" selection-start-line="423" selection-start-column="46" selection-end-line="423" selection-end-column="46" />
+        <state relative-caret-position="511">
+          <caret line="424" column="1" selection-start-line="424" selection-start-column="1" selection-end-line="424" selection-end-column="1" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
             <element signature="e#7225#7345#0" expanded="false" />
