@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f4cfff8e-89ad-456f-a3a6-f6f4162556af" name="Default" comment="RaspiCam Test">
+    <list default="true" id="f4cfff8e-89ad-456f-a3a6-f6f4162556af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pystepp.py" afterPath="$PROJECT_DIR$/pystepp.py" />
     </list>
@@ -28,17 +28,17 @@
       <file leaf-file-name="pystepp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pystepp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="111" column="8" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
+            <state relative-caret-position="273">
+              <caret line="95" column="18" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="18" />
               <folding>
                 <element signature="e#47#89#0" expanded="true" />
-                <element signature="e#7231#7351#0" expanded="false" />
-                <element signature="e#8891#9297#0" expanded="false" />
-                <element signature="e#9404#10082#0" expanded="false" />
-                <element signature="e#10187#10321#0" expanded="false" />
-                <element signature="e#10426#10784#0" expanded="false" />
-                <element signature="e#10916#11749#0" expanded="false" />
-                <element signature="e#11793#13535#0" expanded="false" />
+                <element signature="e#7230#7350#0" expanded="false" />
+                <element signature="e#8890#9296#0" expanded="false" />
+                <element signature="e#9403#10081#0" expanded="false" />
+                <element signature="e#10186#10320#0" expanded="false" />
+                <element signature="e#10425#10783#0" expanded="false" />
+                <element signature="e#10915#11748#0" expanded="false" />
+                <element signature="e#11792#13534#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -623,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473065652535</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="RaspiCam Test">
+      <created>1473065751217</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1473065751217</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -679,13 +686,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
-            <element signature="e#7231#7351#0" expanded="false" />
-            <element signature="e#8891#9297#0" expanded="false" />
-            <element signature="e#9404#10082#0" expanded="false" />
-            <element signature="e#10187#10321#0" expanded="false" />
-            <element signature="e#10426#10784#0" expanded="false" />
-            <element signature="e#10916#11749#0" expanded="false" />
-            <element signature="e#11793#13535#0" expanded="false" />
+            <element signature="e#7230#7350#0" expanded="false" />
+            <element signature="e#8890#9296#0" expanded="false" />
+            <element signature="e#9403#10081#0" expanded="false" />
+            <element signature="e#10186#10320#0" expanded="false" />
+            <element signature="e#10425#10783#0" expanded="false" />
+            <element signature="e#10915#11748#0" expanded="false" />
+            <element signature="e#11792#13534#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -696,13 +703,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
-            <element signature="e#7231#7351#0" expanded="false" />
-            <element signature="e#8891#9297#0" expanded="false" />
-            <element signature="e#9404#10082#0" expanded="false" />
-            <element signature="e#10187#10321#0" expanded="false" />
-            <element signature="e#10426#10784#0" expanded="false" />
-            <element signature="e#10916#11749#0" expanded="false" />
-            <element signature="e#11793#13535#0" expanded="false" />
+            <element signature="e#7230#7350#0" expanded="false" />
+            <element signature="e#8890#9296#0" expanded="false" />
+            <element signature="e#9403#10081#0" expanded="false" />
+            <element signature="e#10186#10320#0" expanded="false" />
+            <element signature="e#10425#10783#0" expanded="false" />
+            <element signature="e#10915#11748#0" expanded="false" />
+            <element signature="e#11792#13534#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -758,17 +765,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pystepp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="111" column="8" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
+        <state relative-caret-position="273">
+          <caret line="95" column="18" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="18" />
           <folding>
             <element signature="e#47#89#0" expanded="true" />
-            <element signature="e#7231#7351#0" expanded="false" />
-            <element signature="e#8891#9297#0" expanded="false" />
-            <element signature="e#9404#10082#0" expanded="false" />
-            <element signature="e#10187#10321#0" expanded="false" />
-            <element signature="e#10426#10784#0" expanded="false" />
-            <element signature="e#10916#11749#0" expanded="false" />
-            <element signature="e#11793#13535#0" expanded="false" />
+            <element signature="e#7230#7350#0" expanded="false" />
+            <element signature="e#8890#9296#0" expanded="false" />
+            <element signature="e#9403#10081#0" expanded="false" />
+            <element signature="e#10186#10320#0" expanded="false" />
+            <element signature="e#10425#10783#0" expanded="false" />
+            <element signature="e#10915#11748#0" expanded="false" />
+            <element signature="e#11792#13534#0" expanded="false" />
           </folding>
         </state>
       </provider>
