@@ -58,7 +58,7 @@ camera = picamera.PiCamera()
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    maxSpeed = 0.005
+    maxSpeed = 0.002
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -414,7 +414,7 @@ while moveCounter < AnzahlFotos:
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
-end = time.time()
+end = time.clock()
 print('Time:',end - start)
 
 #checkForButton()
