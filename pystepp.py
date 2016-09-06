@@ -58,9 +58,7 @@ camera = picamera.PiCamera()
 
 def moveStepper(steps):#moves the motor a certain amount ('steps')
     stepCounter = 0
-    #maxSpeed = 0.0015
-    maxSpeed = 0.01
-
+    maxSpeed = 0.0015
     jerkSpeed = 0.01
     acceleration = 0.98
 
@@ -399,7 +397,7 @@ dirPfad = '/home/pi/RaspiCode/Bilder/'
 #dirName = raw_input('Name des Scans: ')
 dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
-#writeMeta(speicherPfad, dirName, AnzahlFotos)
+writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera('RaspiCam', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
