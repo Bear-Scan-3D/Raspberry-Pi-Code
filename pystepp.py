@@ -85,12 +85,9 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         if currentSpeed < jerkSpeed and deltaSteps < brakeThreshold:
             currentSpeed /= acceleration
         elif currentSpeed > maxSpeed:# and stepCounter < (brakeThreshold + 100):
-                currentSpeed *= acceleration
+            currentSpeed *= acceleration
 
-    time.sleep(1)
     return
-
-
 
 def checkForButton(): #waits for user to press the button of the rotary encoder
     print('Please press the button of the knob.')
@@ -135,12 +132,12 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
         camera.led = True
         camera.capture(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
         print('Foto ' + str(indx) + ' aufgenommen.')
-        time.sleep(2)
+        time.sleep(1)
         camera.led = False
     elif usedCamera == 'Nikon':
         print('Nikon')
         cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
-        time.sleep(2)
+        time.sleep(1)
     return
 
 def makeDirectory(dirPfad, dirName):#makes a directory with the name: 'dirName' and the path: 'dirPfad'
