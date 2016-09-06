@@ -179,14 +179,11 @@ def getOverexposerValue():
 
 def setupCamera(chosenCam, status): #used to set up various parameters of the camera
 
-    print('Vor Cam Setup')
-
-    print('Nach Cam COntruktor')
     print('chosenCam: ',chosenCam,'   status: ', status)
 
     if chosenCam == 'RaspiCam' and status == 1:
 
-        usedCamera = 'RaspiCam'
+        self.usedCamera = 'RaspiCam'
         # make instance of camera
         #camera = picamera.PiCamera()
 
@@ -400,6 +397,7 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera('RaspiCam', 1)
+print('usedCam: ', usedCamera)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
