@@ -382,8 +382,8 @@ enableMotor(False)
 
 #dirPfad = raw_input('dirPfad: ')
 dirPfad = '/home/pi/RaspiCode/Bilder/'
-#dirName = raw_input('Name des Scans: ')
-dirName = 'DEBUGFOTOS'
+dirName = raw_input('Name des Scans: ')
+#dirName = 'DEBUGFOTOS'
 speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
