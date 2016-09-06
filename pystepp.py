@@ -134,7 +134,7 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
     if usedCamera == 'RaspiCam':
         camera.led = True
         camera.capture(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
-        print('Foto ' + str(indx) + ' aufgenommen: ')
+        print('Foto ' + str(indx) + ' aufgenommen.')
         time.sleep(2)
         camera.led = False
     elif usedCamera == 'Nikon':
@@ -178,9 +178,6 @@ def getOverexposerValue():
     return value
 
 def setupCamera(chosenCam, status): #used to set up various parameters of the camera
-
-    print('chosenCam: ',chosenCam,'   status: ', status)
-
     if chosenCam == 'RaspiCam' and status == 1:
 
         global usedCamera
@@ -199,8 +196,6 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
         camera.awb_mode = 'off'
         camera.awb_gains = whiteBalanceBuffer
         camera.start_preview(alpha=128, fullscreen=True)
-
-        print('Nach Cam Setups')
 
         #overExposerValue = getOverexposerValue()
 
@@ -396,12 +391,12 @@ speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
 setupCamera('RaspiCam', 1)
-print('usedCam: ', usedCamera)
+
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
 
-start = time.time()
+#start = time.time()
 while moveCounter < AnzahlFotos:
     Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     moveStepper (AnzahlSteps)
@@ -412,7 +407,7 @@ while moveCounter < AnzahlFotos:
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('RaspiCam', 0)
 
-print('Time:',time.time() - start,' seconds.')
+#print('Time:',time.time() - start,' seconds.')
 
 #checkForButton()
 
