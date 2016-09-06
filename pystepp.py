@@ -183,9 +183,8 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
 
     if chosenCam == 'RaspiCam' and status == 1:
 
-        self.usedCamera = 'RaspiCam'
-        # make instance of camera
-        #camera = picamera.PiCamera()
+        global usedCamera
+        usedCamera = 'RaspiCam'
 
         camera.resolution = (2592, 1944) #max resolution of the RaspiCam
         camera.sharpness = 1
