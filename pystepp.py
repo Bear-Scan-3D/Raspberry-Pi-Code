@@ -127,7 +127,7 @@ def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the gi
 def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with the available camera
 
     #print('index: ', indx, 'FotoPfad: ', fotoPfad)
-
+    picTries = 0
     #check whether the current taken picture needs to have one, two or none leading zero (always have 3 digits)
     #(makes sorting the pictures easiert - depends on used software)
     strindx = indx
@@ -143,17 +143,17 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
         time.sleep(1)
         camera.led = False
     elif usedCamera == 'Nikon':
-        while tries < 10:  # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
+        while picTries < 10:  # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
             try:
                 cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_Nikon_' + str(strindx) + '.jpg')
                 print('Foto ' + str(indx) + ' aufgenommen.')
                 break
             except:
-                if tries > 5:
+                if picTries > 5:
                     moveStepper(10)
 
-                tries += 1
-                print('Coudn\'t take picture. Try: ',str(tries))
+                picTries += 1
+                print('Coudn\'t take picture. Try: ',str(picTries))
 
         time.sleep(1)
     return
