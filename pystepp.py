@@ -126,8 +126,8 @@ def AnzahlFotosToSteps(AnzahlFotos): #calculates the amount of stepps for the gi
 
 def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with the available camera
 
-    #print('index: ', indx, 'FotoPfad: ', fotoPfad)
     picTries = 0
+
     #check whether the current taken picture needs to have one, two or none leading zero (always have 3 digits)
     #(makes sorting the pictures easiert - depends on used software)
     strindx = indx
@@ -140,22 +140,22 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
         camera.led = True
         camera.capture(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
         print('Foto ' + str(indx) + ' aufgenommen.')
-        time.sleep(1)
+        time.sleep(0.5)
         camera.led = False
     elif usedCamera == 'Nikon':
-        while picTries < 10:  # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
+        while picTries < 20:  #mostly autofocus problems
             try:
                 cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_Nikon_' + str(strindx) + '.jpg')
                 print('Foto ' + str(indx) + ' aufgenommen.')
+                time.sleep(0.5)
                 break
             except:
                 if picTries > 5:
-                    moveStepper(10)
-
+                    moveStepper(5)
                 picTries += 1
-                print('Coudn\'t take picture. Try: ',str(picTries))
+                print('Coudn\'t take picture ',strindx,'. Try: ',picTries)
 
-        time.sleep(1)
+        #time.sleep(0.1)
     return
 
 def makeDirectory(dirPfad, dirName):#makes a directory with the name: 'dirName' and the path: 'dirPfad'
