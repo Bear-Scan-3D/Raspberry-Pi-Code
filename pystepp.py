@@ -143,8 +143,18 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
         time.sleep(1)
         camera.led = False
     elif usedCamera == 'Nikon':
-        cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_Nikon_' + str(strindx) + '.jpg')
-        print('Foto ' + str(indx) + ' aufgenommen.')
+        while tries < 10:  # sometimes the i2C bus seems busy and the pi can't wrtie to the display so it has 10 tries to do so
+            try:
+                cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_Nikon_' + str(strindx) + '.jpg')
+                print('Foto ' + str(indx) + ' aufgenommen.')
+                break
+            except:
+                if tries > 5:
+                    moveStepper(10)
+
+                tries += 1
+                print('Coudn\'t take picture. Try: ',str(tries))
+
         time.sleep(1)
     return
 
@@ -214,8 +224,6 @@ def setupCamera(chosenCam, status): #used to set up various parameters of the ca
     if chosenCam == 'Nikon' and status == 1:
         usedCamera = 'Nikon'
         #cam = piggyphoto.camera()
-
-        print('Nikon')
 
     if status == 0:
         if chosenCam == 'RaspiCam':
