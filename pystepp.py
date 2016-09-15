@@ -12,7 +12,8 @@ import gaugette.rotary_encoder
 import gaugette.switch
 
 import picamera #for use with the RaspiCam
-#import piggyphoto
+
+import piggyphoto
 import os
 
 
@@ -51,6 +52,13 @@ minFotos = 5 #Probably should be at least arround 10 for good results
 
 usedCamera = '' #can also be Nikon or RaspiCam
 camera = picamera.PiCamera()
+
+try:  # try to connect nikon cam
+    cam = piggyphoto.camera()
+except:
+    print('Couldn\'t create Nkon Cam')
+
+
 
 #========================================================================
 #Methods
@@ -387,7 +395,7 @@ dirName = raw_input('Name des Scans: ')
 speicherPfad = makeDirectory(dirPfad, dirName)
 writeMeta(speicherPfad, dirName, AnzahlFotos)
 
-setupCamera('RaspiCam', 1)
+setupCamera('Nikon', 1)
 
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
@@ -402,7 +410,7 @@ while moveCounter < AnzahlFotos:
 
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
-setupCamera('RaspiCam', 0)
+setupCamera('Nikon', 0)
 
 #print('Time:',time.time() - start,' seconds.')
 
