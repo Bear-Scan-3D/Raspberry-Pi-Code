@@ -143,8 +143,8 @@ def Fotoaufnehmen (indx, fotoPfad, scanName): # used for taking a picture with t
         time.sleep(1)
         camera.led = False
     elif usedCamera == 'Nikon':
-        print('Nikon')
-        cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_PiCam_' + str(strindx) + '.jpg')
+        cam.capture_image(str(fotoPfad) + '/' + str(scanName) + '_Nikon_' + str(strindx) + '.jpg')
+        print('Foto ' + str(indx) + ' aufgenommen.')
         time.sleep(1)
     return
 
@@ -400,14 +400,13 @@ setupCamera('Nikon', 1)
 enableMotor(True)#Easydriver vor Bewegung anschalten
 
 #getStepsforRevolution() #Nur bei der Verwendung von neuen (anderen) Pulleys nötig
-
+Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 #start = time.time()
 while moveCounter < AnzahlFotos:
-    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
     moveStepper (AnzahlSteps)
     moveCounter += 1
     writeToDisplay(AnzahlFotos - moveCounter) #Restliche Anzahl von Fotos ins Display schreiben
-
+    Fotoaufnehmen(moveCounter, speicherPfad, dirName)
 
 enableMotor(False) #Schaltet den Easydriver vor Ende des Programms aus
 setupCamera('Nikon', 0)
