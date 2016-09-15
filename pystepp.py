@@ -80,7 +80,7 @@ def moveStepper(steps):#moves the motor a certain amount ('steps')
         #switching between the two states of this GPIO Pins results in a 'pulse' for the steppermotordriver
         #Every 'pulse' the stepperdriver makes one microstep
         gpio.output(24, True)
-        #time.sleep(0.00002)
+        time.sleep(0.00002)
         gpio.output(24, False)
         stepCounter += 1
         #print('currentSpeedvorSleep: ',currentSpeed)
